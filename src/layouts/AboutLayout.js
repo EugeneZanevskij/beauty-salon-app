@@ -4,23 +4,23 @@ import '../styles/AboutLayout.css';
 function AboutLayout() {
   return (
     <>
-      <main className="main-content">
+      <main className="about">
         <Outlet />
       </main>
-      <aside className='sidebar'>
-        <nav>
-          <ul>
-            <li>
-              <Link to="">About</Link>
+      <aside className='about__sidebar'>
+        <nav className='about__sidebar-nav'>
+          <ul className='about__sidebar-list'>
+            <li className='about__sidebar-item'>
+              <Link to="" className='about__sidebar-link'>About</Link>
             </li>
-            <li>
-              <Link to="services">Services</Link>
+            <li className='about__sidebar-item'>
+              <Link to="services" className='about__sidebar-link'>Services</Link>
             </li>
-            <li>
-              <Link to="masters">Masters</Link>
+            <li className='about__sidebar-item'>
+              <Link to="masters" className='about__sidebar-link'>Masters</Link>
             </li>
-            <li>
-              <Link to="schedule">Schedule</Link>
+            <li className='about__sidebar-item'>
+              <Link to="schedule" className='about__sidebar-link'>Schedule</Link>
             </li>
           </ul>
         </nav>
