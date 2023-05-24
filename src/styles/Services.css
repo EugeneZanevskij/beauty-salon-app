@@ -1,0 +1,56 @@
+.services-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.categories {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+button {
+  margin-right: 10px;
+  padding: 10px 20px;
+  background-color: #eee;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button.active {
+  background-color: #ccc;
+}
+
+.services {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.service {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.service h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.service p {
+  margin-bottom: 5px;
+}
+
+.service strong {
+  font-weight: bold;
+}
