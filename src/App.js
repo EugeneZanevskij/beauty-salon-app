@@ -1,18 +1,22 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import HomePage from './pages/HomePage';
+import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom';
 import './index.css';
+import HomeLayout from './layouts/HomeLayout';
+import AboutPage from './layouts/AboutLayout';
+import HomePage from './pages/HomePage';
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<HomeLayout />} >
+      <Route index element={<HomePage />} />
+      <Route path="about" element={<AboutPage />} />
+    </Route>
+  )
+)
 
 function App() {
   return (
-    <Router>
-      <div>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          {/* Add more routes for other pages */}
-        </Routes>
-      </div>
-    </Router>
+    <RouterProvider router={router} />
   );
 }
 
