@@ -38,7 +38,7 @@ nav ul li a {
 }
 
 .sidebar {
-  width: 10rem;
+  width: fit-content;
   background-color: #f5f5f5;
   padding: 1.25rem;
   position: fixed;

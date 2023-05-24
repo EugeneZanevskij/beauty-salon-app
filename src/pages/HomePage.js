@@ -1,7 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, useRoutes } from 'react-router-dom';
 import '../styles/HomePage.css';
+import MainView from '../components/MainView';
 
 function HomePage() {
+  const routes = useRoutes([
+    { path: '/', element: <MainView /> },
+  ]);
+
   return (
     <div className='container'>
       <header className="header">
@@ -14,12 +19,15 @@ function HomePage() {
           </ul>
         </nav>
       </header>
-      <main main-content>
-        <p>That's HomePage.</p>
+      <main className="main-content">
+        {routes}
       </main>
       <aside className='sidebar'>
         <nav>
           <ul>
+            <li>
+              <Link to="/">Main</Link>
+            </li>
             <li>
               <Link to="/services">Services</Link>
             </li>
