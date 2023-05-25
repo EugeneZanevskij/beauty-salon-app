@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import '../styles/AdminLayout.css';
 
 const AdminLayout = () => {
   return (
-    <div className="admin-layout">
+    <main className="admin-layout">
         <nav className="admin-layout__nav">
           <ul className="admin-layout__nav-list">
             <li className="admin-layout__nav-item">
@@ -21,7 +21,8 @@ const AdminLayout = () => {
             </li>
           </ul>
         </nav>
-      </div>
+        <Outlet />
+      </main>
   )
 }
 
