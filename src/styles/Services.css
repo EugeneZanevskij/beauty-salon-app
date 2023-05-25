@@ -1,18 +1,18 @@
-.services-page {
+.about__services {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 1.25rem;
   width: calc(100% - 4rem);
   margin: 0;
 }
 
-h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
+.about__services-title {
+  font-size: 2rem;
+  margin-bottom: 1.25rem;
 }
 
-.categories {
+.about__services-categories {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -20,42 +20,40 @@ h1 {
   text-transform: capitalize;
 }
 
-button {
-  margin-right: 10px;
-  padding: 10px 20px;
+.about__services-categories__button {
+  padding: 0.5rem 1.25rem;
   background-color: #eee;
   border: none;
-  border-radius: 4px;
-  font-size: 16px;
+  border-radius: 0.25rem;
   cursor: pointer;
   text-transform: capitalize;
 }
 
-button.active {
+.about__services-categories__button.active {
   background-color: #ccc;
 }
 
-.services {
+.about__services-services {
+  margin-top: 1rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  gap: 1.25rem;
 }
 
-.service {
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 4px;
+.about__services-services__card {
+  border: 0.125rem solid #ccc;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
 }
 
-.service h2 {
-  font-size: 20px;
-  margin-bottom: 10px;
+.about__services-services__card-title {
+  margin-bottom: 0.75rem;
+  text-transform: capitalize;
 }
 
-.service p {
-  margin-bottom: 5px;
-}
-
-.service strong {
-  font-weight: bold;
+.about__services-services__card-info {
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  text-transform: capitalize;
 }

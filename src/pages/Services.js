@@ -30,11 +30,11 @@ const Services = () => {
     : services;
 
   return (
-    <div className="services-page">
-      <h1>Services</h1>
-      <div className="categories">
+    <div className="about__services">
+      <h1 className="about__services-title">Services</h1>
+      <div className="about__services-categories">
         <button
-          className={!selectedCategory ? "active" : ""}
+          className={`about__services-categories__button ${selectedCategory === null ? "active" : ""}`}
           onClick={() => handleCategoryClick(null)}
         >
           All
@@ -42,26 +42,26 @@ const Services = () => {
         {categories.map((category) => (
           <button
             key={category.id}
-            className={selectedCategory === category.id ? "active" : ""}
+            className={`about__services-categories__button ${selectedCategory === category.id ? "active" : ""}`}
             onClick={() => handleCategoryClick(category.id)}
           >
             {category.category}
           </button>
         ))}
       </div>
-      <div className="services">
+      <div className="about__services-services">
         {filteredServices.map((service) => (
-          <div key={service.id} className="service">
-            <h2>{service.name}</h2>
-            <p>
+          <div key={service.id} className="about__services-services__card">
+            <h2 className="about__services-services__card-title">{service.name}</h2>
+            <div className="about__services-services__card-info">
               <strong>Category:</strong> {service.category}
-            </p>
-            <p>
+            </div>
+            <div className="about__services-services__card-info">
               <strong>Price:</strong> ${service.price}
-            </p>
-            <p>
+            </div>
+            <div className="about__services-services__card-info">
               <strong>Duration:</strong> {service.duration_minutes} minutes
-            </p>
+            </div>
           </div>
         ))}
       </div>
