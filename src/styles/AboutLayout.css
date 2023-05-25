@@ -1,6 +1,7 @@
 .about {
   flex: 1;
   text-align: center;
+  width: calc(100% - 6.5rem);
 }
 
 .about__sidebar {
