@@ -26,7 +26,7 @@ app.get('/api/categories', (req, res) => {
   });
 });
 app.get('/api/services', (req, res) => {
-  const servicesData = `SELECT s.id, s.name, c.category, s.price, s.duration_minutes 
+  const servicesData = `SELECT s.id, s.name, s.category_id, c.category, s.price, s.duration_minutes 
   FROM services s
   INNER JOIN category c ON s.category_id = c.id`;
   db.query(servicesData, (err, results) => {
