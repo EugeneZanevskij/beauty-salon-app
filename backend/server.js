@@ -10,12 +10,23 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get("/", (req, res) => {
-  res.send("API is currently running");
-});
+// app.get("/", (req, res) => {
+//   res.send("API is currently running");
+// });
 
+app.get('/api/categories', (req, res) => {
+  const categoriesData = `SELECT id, category FROM category`;
+  db.query(categoriesData, (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Error retrieving services' });
+    }
+    res.json(results);
+    // res.send(results);
+  });
+});
 app.get('/api/services', (req, res) => {
-  const servicesData = `SELECT s.name, c.category, s.price, s.duration_minutes 
+  const servicesData = `SELECT s.id, s.name, c.category, s.price, s.duration_minutes 
   FROM services s
   INNER JOIN category c ON s.category_id = c.id`;
   db.query(servicesData, (err, results) => {

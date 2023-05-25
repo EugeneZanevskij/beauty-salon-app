@@ -3,6 +3,8 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  width: calc(100% - 4rem);
+  margin: 0;
 }
 
 h1 {
@@ -13,7 +15,9 @@ h1 {
 .categories {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 1rem;
+  text-transform: capitalize;
 }
 
 button {
@@ -24,6 +28,7 @@ button {
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
+  text-transform: capitalize;
 }
 
 button.active {
