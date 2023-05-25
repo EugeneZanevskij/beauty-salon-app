@@ -18,6 +18,9 @@ const HomeLayout = () => {
             <li className="header__nav-item">
               <Link to="profile" className='header__nav-link'>Profile</Link>
             </li>
+            <li className="header__nav-item">
+              <Link to="admin" className='header__nav-link'>Admin</Link>
+            </li>
           </ul>
         </nav>
       </header>

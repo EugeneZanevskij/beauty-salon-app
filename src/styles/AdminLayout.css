@@ -1,0 +1,31 @@
+.admin-layout {
+}
+
+.admin-layout__nav {
+  background-color: #a0c75b;
+  padding: 1.25rem;
+}
+
+.admin-layout__nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.admin-layout__nav-item {
+  margin-bottom: 0.5rem;
+}
+
+.admin-layout__nav-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.admin-layout__nav-link:hover {
+  color: #ffffff;
+}

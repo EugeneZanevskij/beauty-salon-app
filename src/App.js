@@ -8,6 +8,7 @@ import Services from './pages/Services';
 import Masters from './pages/Masters';
 import Schedule from './pages/Schedule';
 import AboutPage from './pages/AboutPage';
+import AdminLayout from './layouts/AdminLayout';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
         <Route path="masters" element={<Masters />} />
         <Route path="schedule" element={<Schedule />} />
       </Route>
+      <Route path='admin' element={<AdminLayout />}></Route>
     </Route>
   )
 )
