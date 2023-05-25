@@ -1,14 +1,31 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const cors = require('cors');
+const db = require('./database/db');
 // const routes = require('./routes');
 
 // Middleware
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
   res.send("API is currently running");
+});
+
+app.get('/api/services', (req, res) => {
+  const servicesData = `SELECT s.name, c.category, s.price, s.duration_minutes 
+  FROM services s
+  INNER JOIN category c ON s.category_id = c.id`;
+  db.query(servicesData, (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Error retrieving services' });
+    }
+    res.json(results);
+    // res.send(results);
+  });
 });
 
 // Routes
@@ -21,7 +38,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start the server
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
