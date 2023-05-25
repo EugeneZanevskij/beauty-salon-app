@@ -39,6 +39,22 @@ app.get('/api/services', (req, res) => {
   });
 });
 
+app.get('/api/masters', (req, res) => {
+  const mastersData = `SELECT m.id, m.firstName, m.lastName, m.coefficient, s.name, c.category
+  FROM master_services ms
+  INNER JOIN master m ON ms.master_id = m.id
+  INNER JOIN services s ON ms.service_id = s.id
+  INNER JOIN category c ON s.category_id = c.id;`;
+  db.query(mastersData, (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Error retrieving masters' });
+    }
+    res.json(results);
+    // res.send(results);
+  });
+})
+
 // Routes
 // app.use('/api', routes);
 

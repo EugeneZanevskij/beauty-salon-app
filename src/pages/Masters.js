@@ -1,78 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Masters.css';
-import axios from 'axios';
+import api from '../api';
 
 const Masters = () => {
   const [masters, setMasters] = useState([]);
-  const [categories, setCategories] = useState(['Haircut', 'Manicure']);
+  // const [categories, setCategories] = useState(['Haircut', 'Manicure']);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  // const [selectedCategory, setSelectedCategory] = useState(null);
 
-  // useEffect(() => {
-  //   axios.get('/api/masters').then((res) => {
-  //     setMasters(res.data);
-  //   });
-  //   axios.get('/api/categories').then((res) => {
-  //     setCategories(res.data);
-  //   });
-  // }, []);
+  const loadMasters = async () => {
+    const response = await api.get("/api/masters");
+    setMasters(response.data);
+  };
+  // const loadCategories = async () => {
+  //   const response = await api.get("/api/categories");
+  //   setCategories(response.data);
+  // };
 
   useEffect(() => {
-    // Fetch masters data from API or database
-    const fetchedMasters = [
-      {
-        id: 1,
-        name: "John Smith",
-        coefficient: 1.5,
-        services: [
-          {
-            id: 1,
-            name: "Haircut",
-            category: "Hair",
-            price: 30,
-            duration_minutes: 45,
-          },
-          {
-            id: 2,
-            name: "Manicure",
-            category: "Nails",
-            price: 20,
-            duration_minutes: 30,
-          },
-        ],
-      },
-      {
-        id: 2,
-        name: "Emily Johnson",
-        coefficient: 2.0,
-        services: [
-          {
-            id: 3,
-            name: "Facial",
-            category: "Skin Care",
-            price: 50,
-            duration_minutes: 60,
-          },
-          {
-            id: 4,
-            name: "Pedicure",
-            category: "Nails",
-            price: 25,
-            duration_minutes: 40,
-          },
-        ],
-      },
-      // Add more masters as needed
-    ];
-
-    setMasters(fetchedMasters);
+    loadMasters();
+    // loadCategories();
   }, []);
+
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
-  };
-
-  const handleCategoryChange = (categoryId) => {
-    setSelectedCategory(categoryId);
   };
 
   //TODO: doesn't work
@@ -85,23 +36,23 @@ const Masters = () => {
   // });
 
   return (
-    <div className="masters-page">
-      <h1>Masters</h1>
-      <div className="filters">
+    <div className="about__masters">
+      <h1 className="about__masters-title">Masters</h1>
+      <div className="about__masters-filters">
         <input
+          className="about__masters-filters__input"
           type="text"
           value={searchQuery}
           onChange={handleSearchChange}
           placeholder="Search masters"
         />
-        <select value={selectedCategory} onChange={(e) => handleCategoryChange(e.target.value)}>
-          <option value="">All Categories</option>
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+        {/* TODO: search services */}
+        {/* <input
+          type="text"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          placeholder="Search masters"
+        /> */}
       </div>
       {/* <div className="masters">
         {filteredMasters.map((master) => (
@@ -117,15 +68,15 @@ const Masters = () => {
           </div>
         ))}
       </div> */}
-      <div className="masters">
+      <div className="about__masters-masters">
         {masters.map((master) => (
-          <div key={master.id} className="master">
-            <h2>{master.name}</h2>
-            <p>
+          <div key={master.id} className="about__masters-masters__card">
+            <h2 className="about__masters-masters__card-title">{master.firstName} {master.lastName}</h2>
+            <div className="about__masters-masters__card-info">
               <strong>Coefficient:</strong> {master.coefficient}
-            </p>
-            <h3>Services:</h3>
-            <ul>
+            </div>
+            <h3 className="about__masters-masters__card-title">Services:</h3>
+            {/* <ul>
               {master.services.map((service) => (
                 <li key={service.id}>
                   <p>
@@ -142,7 +93,7 @@ const Masters = () => {
                   </p>
                 </li>
               ))}
-            </ul>
+            </ul> */}
           </div>
         ))}
       </div>

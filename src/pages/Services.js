@@ -10,12 +10,12 @@ const Services = () => {
   const loadServices = async () => {
     const response = await api.get("/api/services");
     setServices(response.data);
-    console.log(services);
   };
   const loadCategories = async () => {
     const response = await api.get("/api/categories");
     setCategories(response.data);
-  }
+  };
+  
   useEffect(() => {
     loadCategories();
     loadServices();
