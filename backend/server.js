@@ -40,11 +40,15 @@ app.get('/api/services', (req, res) => {
 });
 
 app.get('/api/masters', (req, res) => {
-  const mastersData = `SELECT m.id, m.firstName, m.lastName, m.coefficient, s.name, c.category
+  const mastersData = `
+  SELECT m.id, m.firstName, m.lastName, m.coefficient, 
+  JSON_ARRAYAGG(JSON_OBJECT('name', s.name, 'category', c.category)) AS services
   FROM master_services ms
   INNER JOIN master m ON ms.master_id = m.id
   INNER JOIN services s ON ms.service_id = s.id
-  INNER JOIN category c ON s.category_id = c.id;`;
+  INNER JOIN category c ON s.category_id = c.id
+  GROUP BY m.id;
+    `;
   db.query(mastersData, (err, results) => {
     if (err) {
       console.error(err);
