@@ -8,10 +8,13 @@ const AdminLayout = () => {
         <nav className="admin-layout__nav">
           <ul className="admin-layout__nav-list">
             <li className="admin-layout__nav-item">
+              <Link to="" className="admin-layout__nav-link">Admin</Link>
+            </li>
+            <li className="admin-layout__nav-item">
               <Link to="clients" className="admin-layout__nav-link">Clients</Link>
             </li>
             <li className="admin-layout__nav-item">
-              <Link to="/masters" className="admin-layout__nav-link">Masters</Link>
+              <Link to="masters" className="admin-layout__nav-link">Masters</Link>
             </li>
             <li className="admin-layout__nav-item">
               <Link to="services" className="admin-layout__nav-link">Services</Link>
