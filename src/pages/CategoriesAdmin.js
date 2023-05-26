@@ -66,6 +66,26 @@ const CategoriesAdmin = () => {
     }
   };
 
+  const handleEdit = (category) => {
+    setCategory(category);
+    toggleModal();
+  }
+
+  const handleUpdateButton = async (e) => {
+    e.preventDefault();
+    try {
+      await api.put(`/api/admin/categories/${category.id}`, category);
+      fetchCategories();
+    } catch (error) {
+      console.error('Error updating category:', error);
+    }
+    setCategory({
+      id: null,
+    category: '',
+    });
+    toggleModal();
+  }
+
   console.log(category);
 
   return (
@@ -87,7 +107,7 @@ const CategoriesAdmin = () => {
               <td>{category.category}</td>
               <td>
                 <button onClick={() => handleDelete(category.id)}>Delete</button>
-                <button>Edit</button>
+                <button onClick={() => handleEdit(category)}>Edit</button>
               </td>
             </tr>
           ))}
@@ -97,8 +117,8 @@ const CategoriesAdmin = () => {
         <div className="modal">
           <div className="modal__content">
             <h2 className="modal__title">Category</h2>
-            <input className="modal__input" type="text" placeholder='Category Name' onChange={handleChange} name='category'/>
-            <button onClick={handleAddButton}>Add</button>
+            <input className="modal__input" type="text" placeholder='Category Name' onChange={handleChange} value={category.category} name='category'/>
+            {category.id ? <button onClick={handleUpdateButton}>Update</button> : <button onClick={handleAddButton}>Add</button>}
             <button onClick={handleCloseButton}>Close</button>
           </div>
         </div>

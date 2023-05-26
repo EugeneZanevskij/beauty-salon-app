@@ -119,6 +119,19 @@ app.delete('/api/admin/categories/:id', (req, res) => {
     }
     return res.status(200).json({ message: 'Category deleted successfully' });
   })
+});
+
+app.put('/api/admin/categories/:id', (req, res) => {
+  const { id } = req.params;
+  const values = [req.body.category];
+  const updateCategory = `UPDATE category SET category = ? WHERE id = ?`;
+  db.query(updateCategory, [...values, id], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Error updating category' });
+    }
+    return res.status(200).json({ message: 'Category updated successfully' });
+  })
 })
 
 // Routes
