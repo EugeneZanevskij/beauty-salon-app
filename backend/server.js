@@ -82,6 +82,17 @@ app.get('/api/appointments', (req, res) => {
 
 
 
+app.get('/api/admin/clients', (req, res) => {
+  const clientsData = `SELECT * FROM client`;
+  db.query(clientsData, (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Error retrieving services' });
+    }
+    res.json(results);
+    // res.send(results);
+  });
+});
 
 
 app.get('/api/admin/categories', (req, res) => {
