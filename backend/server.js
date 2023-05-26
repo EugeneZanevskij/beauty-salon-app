@@ -107,6 +107,18 @@ app.post('/api/admin/categories', (req, res) => {
     }
     return res.status(201).json({ message: 'Category added successfully' });
   })
+});
+
+app.delete('/api/admin/categories/:id', (req, res) => {
+  const { id } = req.params;
+  const deleteCategory = `DELETE FROM category WHERE id = ?`;
+  db.query(deleteCategory, [id], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Error deleting category' });
+    }
+    return res.status(200).json({ message: 'Category deleted successfully' });
+  })
 })
 
 // Routes
