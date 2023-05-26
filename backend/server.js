@@ -80,6 +80,35 @@ app.get('/api/appointments', (req, res) => {
   });
 });
 
+
+
+
+
+app.get('/api/admin/categories', (req, res) => {
+  const categoriesData = `SELECT * FROM category`;
+  db.query(categoriesData, (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Error retrieving services' });
+    }
+    res.json(results);
+    // res.send(results);
+  });
+});
+
+app.post('/api/admin/categories', (req, res) => {
+  const { category } = req.body;
+  const categoriesData = `INSERT INTO category (category) VALUES (?)`;
+  // const values = ['test'];
+  db.query(categoriesData, [category], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Error adding category' });
+    }
+    return res.status(201).json({ message: 'Category added successfully' });
+  })
+})
+
 // Routes
 // app.use('/api', routes);
 
