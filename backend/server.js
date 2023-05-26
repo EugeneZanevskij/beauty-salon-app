@@ -94,6 +94,52 @@ app.get('/api/admin/clients', (req, res) => {
   });
 });
 
+app.post('/api/admin/clients', (req, res) => {
+  const { firstName, lastName, phone_number, email, birthday } = req.body;
+
+  const insertClientQuery = 'INSERT INTO client (firstName, lastName, phone_number, email, birthday) VALUES (?, ?, ?, ?, ?)';
+  const values = [firstName, lastName, phone_number, email, birthday];
+
+  db.query(insertClientQuery, values, (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Error creating client' });
+    }
+    res.status(201).json({ message: 'Client created successfully' });
+  });
+});
+
+app.put('/api/admin/clients/:id', (req, res) => {
+  const id = req.params.id;
+  const { firstName, lastName, phone_number, email, birthday } = req.body;
+
+  const updateClientQuery = 'UPDATE client SET firstName=?, lastName=?, phone_number=?, email=?, birthday=? WHERE id=?';
+  const values = [firstName, lastName, phone_number, email, birthday, id];
+
+  db.query(updateClientQuery, values, (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Error updating client' });
+    }
+    res.status(200).json({ message: 'Client updated successfully' });
+  });
+});
+
+app.delete('/api/admin/clients/:clientId', (req, res) => {
+  const clientId = req.params.clientId;
+
+  const deleteClientQuery = 'DELETE FROM client WHERE id=?';
+  const values = [clientId];
+
+  db.query(deleteClientQuery, values, (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Error deleting client' });
+    }
+
+    res.json({ message: `Client with ID ${clientId} deleted successfully` });
+  });
+});
 
 app.get('/api/admin/categories', (req, res) => {
   const categoriesData = `SELECT * FROM category`;

@@ -104,9 +104,12 @@ const ClientsAdmin = () => {
 
   const formatDate = (date) => {
     const dateObject = new Date(date);
-    const formattedDate = dateObject.toLocaleDateString();
+    const year = dateObject.getFullYear();
+    const month = String(dateObject.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObject.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
     return formattedDate;
-  }
+  };
 
   return (
     <>
@@ -182,7 +185,7 @@ const ClientsAdmin = () => {
               type="text"
               placeholder="Birthday"
               onChange={handleChange}
-              value={client.birthday}
+              value={formatDate(client.birthday)}
               name="birthday"
             />
             {client.id ? (
