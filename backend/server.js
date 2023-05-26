@@ -141,6 +141,58 @@ app.delete('/api/admin/clients/:clientId', (req, res) => {
   });
 });
 
+app.get('/api/admin/masters', (req, res) => {
+  const mastersData = `SELECT * FROM master`;
+  db.query(mastersData, (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Error retrieving services' });
+    }
+    res.json(results);
+    // res.send(results);
+  });
+});
+
+app.post('/api/admin/masters', (req, res) => {
+  const {firstName, lastName, coefficient} = req.body;
+  const mastersData = `INSERT INTO master (firstName, lastName, coefficient) VALUES (?, ?, ?)`;
+  const values = [firstName, lastName, coefficient];
+  db.query(mastersData, values, (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Error adding master' });
+    }
+    res.status(201).json({ message: 'Master added successfully' });
+  })
+});
+
+app.delete('/api/admin/masters/:id', (req, res) => {
+  const id = req.params.id;
+  const deleteMasterQuery = 'DELETE FROM master WHERE id=?';
+  const values = [id];
+  db.query(deleteMasterQuery, values, (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Error deleting master' });
+    }
+    res.status(200).json({ message: `Master deleted successfully` });
+  })
+});
+
+app.put('/api/admin/masters/:id', (req, res) => {
+  const id = req.params.id;
+  const { firstName, lastName, coefficient } = req.body;
+  const updateMasterQuery = 'UPDATE master SET firstName=?, lastName=?, coefficient=? WHERE id=?';
+  const values = [firstName, lastName, coefficient, id];
+  db.query(updateMasterQuery, values, (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Error updating master' });
+    }
+    res.status(200).json({ message: 'Master updated successfully' });
+  })
+})
+
 app.get('/api/admin/categories', (req, res) => {
   const categoriesData = `SELECT * FROM category`;
   db.query(categoriesData, (err, results) => {
