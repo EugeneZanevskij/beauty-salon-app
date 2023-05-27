@@ -16,7 +16,7 @@ const HomeLayout = () => {
               <Link to="about" className='header__nav-link'>About</Link>
             </li>
             <li className="header__nav-item">
-              <Link to="profile" className='header__nav-link'>Profile</Link>
+              <Link to="account" className='header__nav-link'>Account</Link>
             </li>
             <li className="header__nav-item">
               <Link to="admin" className='header__nav-link'>Admin</Link>

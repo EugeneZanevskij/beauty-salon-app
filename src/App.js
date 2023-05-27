@@ -14,6 +14,10 @@ import ClientsAdmin from './pages/ClientsAdmin';
 import MastersAdmin from './pages/MastersAdmin';
 import ServicesAdmin from './pages/ServicesAdmin';
 import CategoriesAdmin from './pages/CategoriesAdmin';
+import AccountLayout from './layouts/AccountLayout';
+import AccountPage from './pages/Account/AccountPage';
+import BookingPage from './pages/Account/BookingPage';
+import LoginPage from './pages/LoginPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,6 +36,11 @@ const router = createBrowserRouter(
         <Route path="services" element={<ServicesAdmin />} />
         <Route path="categories" element={<CategoriesAdmin />} />
       </Route>
+      <Route path='account' element={<AccountLayout />}>
+        <Route index element={<AccountPage />} />
+        <Route path='booking' element={<BookingPage />} />
+      </Route>
+      <Route path='login' element={<LoginPage />} />
     </Route>
   )
 )
