@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const db = require('./database/db');
+const masterServicesRouter = require('./routes/masterServicesRouter');
 // const routes = require('./routes');
 
 // Middleware
@@ -162,7 +163,7 @@ app.post('/api/admin/masters', (req, res) => {
       console.error(err);
       return res.status(500).json({ message: 'Error adding master' });
     }
-    res.status(201).json({ message: 'Master added successfully' });
+    res.status(201).json({ id: result.insertId, message: 'Master added successfully' });
   })
 });
 
@@ -301,6 +302,8 @@ app.delete('/api/admin/services/:id', (req, res) => {
     res.status(200).json({ message: `Service with ID ${id} deleted successfully` });
   });
 });
+
+app.use('/api/admin/master_services', masterServicesRouter);
 
 // Routes
 // app.use('/api', routes);

@@ -3,16 +3,19 @@ import api from '../api';
 
 const MastersAdmin = () => {
   const [masters, setMasters] = useState([]);
+  const [services, setServices] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [master, setMaster] = useState({
     id: null,
     firstName: '',
     lastName: '',
     coefficient: 0,
+    selectedServices: [],
   });
 
   useEffect(() => {
     fetchMasters();
+    fetchServices();
   }, []);
 
   const fetchMasters = async () => {
@@ -24,33 +27,65 @@ const MastersAdmin = () => {
     }
   };
 
+  const fetchServices = async () => {
+    try {
+      const response = await api.get('/api/admin/services');
+      setServices(response.data);
+    } catch (error) {
+      console.error('Error fetching services:', error);
+    }
+  };
+
   const handleChange = (e) => {
-    setMaster({
-      ...master,
-      [e.target.name]: e.target.value,
-    });
+    if (e.target.name === 'selectedServices') {
+      const selectedServices = Array.from(e.target.selectedOptions, (option) =>
+        Number(option.value)
+      );
+      setMaster({
+        ...master,
+        selectedServices,
+      });
+    } else {
+      setMaster({
+        ...master,
+        [e.target.name]: e.target.value,
+      });
+    }
   };
 
   const toggleModal = () => {
     setShowModal(!showModal);
   };
 
+  //TODO: check
   const handleAddButton = async (e) => {
-    e.preventDefault();
-    try {
-      await api.post('/api/admin/masters', master);
-      fetchMasters();
-    } catch (error) {
-      console.error('Error creating master:', error);
-    }
-    setMaster({
-      id: null,
-      firstName: '',
-      lastName: '',
-      coefficient: 0,
-    });
-    toggleModal();
-  };
+  e.preventDefault();
+  try {
+    const { selectedServices, ...newMaster } = master;
+    const response = await api.post('/api/admin/masters', newMaster);
+    const masterId = response.data.id;
+    console.log(response.data);
+
+    const promises = selectedServices.map((serviceId) =>
+      api.post('/api/admin/master_services', {
+        master_id: masterId,
+        service_id: serviceId,
+      })
+    );
+    await Promise.all(promises);
+    fetchMasters();
+  } catch (error) {
+    console.error('Error creating master:', error);
+  }
+  setMaster({
+    id: null,
+    firstName: '',
+    lastName: '',
+    coefficient: 0,
+    selectedServices: [],
+  });
+  toggleModal();
+};
 
   const handleCloseButton = async (e) => {
     setMaster({
@@ -58,6 +93,7 @@ const MastersAdmin = () => {
       firstName: '',
       lastName: '',
       coefficient: 0,
+      selectedServices: [],
     });
     toggleModal();
   };
@@ -65,21 +101,45 @@ const MastersAdmin = () => {
   const handleDelete = async (masterId) => {
     try {
       await api.delete(`/api/admin/masters/${masterId}`);
+      await api.delete(`/api/admin/master_services/${masterId}`);
       fetchMasters();
     } catch (error) {
       console.error('Error deleting master:', error);
     }
   };
 
-  const handleEdit = (master) => {
-    setMaster(master);
+  const handleEdit = async (master) => {
+    try {
+      const response = await api.get(`/api/admin/master_services`);
+      const selectedServices = response.data.filter(
+        (masterService) => masterService.master_id === master.id
+      ).map((masterService) => masterService.service_id);
+      console.log(selectedServices);
+      setMaster({
+        ...master,
+        selectedServices,
+      });
+    } catch (error) {
+      console.error('Error fetching master services:', error);
+    }
     toggleModal();
   };
 
   const handleUpdateButton = async (e) => {
     e.preventDefault();
     try {
-      await api.put(`/api/admin/masters/${master.id}`, master);
+      const { selectedServices, ...updatedMaster } = master;
+      console.log(updatedMaster);
+      console.log(selectedServices);
+      await api.put(`/api/admin/masters/${updatedMaster.id}`, updatedMaster);
+      await api.delete(`/api/admin/master_services/${updatedMaster.id}`);
+      const promises = selectedServices.map((serviceId) =>
+        api.post('/api/admin/master_services', {
+          master_id: updatedMaster.id,
+          service_id: serviceId,
+        })
+      );
+      await Promise.all(promises);
       fetchMasters();
     } catch (error) {
       console.error('Error updating master:', error);
@@ -89,6 +149,7 @@ const MastersAdmin = () => {
       firstName: '',
       lastName: '',
       coefficient: 0,
+      selectedServices: [],
     });
     toggleModal();
   };
@@ -150,6 +211,19 @@ const MastersAdmin = () => {
               value={master.coefficient}
               name="coefficient"
             />
+            <select
+              className="modal__input"
+              multiple
+              onChange={handleChange}
+              value={master.selectedServices}
+              name="selectedServices"
+            >
+              {services.map((service) => (
+                <option key={service.id} value={service.id}>
+                  {service.name}
+                </option>
+              ))}
+            </select>
             {master.id ? (
               <button onClick={handleUpdateButton}>Update</button>
             ) : (
@@ -160,7 +234,7 @@ const MastersAdmin = () => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default MastersAdmin
+export default MastersAdmin;
