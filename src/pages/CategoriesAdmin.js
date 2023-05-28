@@ -89,10 +89,10 @@ const CategoriesAdmin = () => {
   console.log(category);
 
   return (
-    <>
-      <div>CategoriesAdmin</div>
+    <div className='admin-categories'>
+      <h1 className='admin-categories__title'>CategoriesAdmin</h1>
       <button className='table__button table__button--add' onClick={toggleModal}>Add Category</button>
-      <table className='table'>
+      <table className='admin-categories__table table'>
         <thead>
           <tr className='table__row'>
             <th className='table__header'>Category ID</th>
@@ -123,7 +123,7 @@ const CategoriesAdmin = () => {
           </div>
         </div>
       )}
-      </>
+    </div>
   )
 }
 

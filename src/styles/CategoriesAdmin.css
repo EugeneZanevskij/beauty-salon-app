@@ -1,7 +1,24 @@
-/* CategoriesAdmin.css */
+.admin-categories {
+  margin: 0 1rem;
+}
 
-.categories-admin {
-  margin: 20px;
+.admin-categories__title {
+  text-align: center;
+}
+
+.admin-categories__table .table__row:nth-of-type(odd) {
+  background-color: rgba(93, 154, 98, 0.4);
+}
+.admin-categories__table .table__row:nth-of-type(even) {
+  background-color: #93e6e8;
+}
+
+.admin-categories__table .table__header {
+  background-color: #998bd3;
+}
+
+.admin-categories__table .table__data:nth-of-type(even) {
+  background-color: #dfe7b7;
 }
 
 .actions {
