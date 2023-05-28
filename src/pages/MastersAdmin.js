@@ -225,11 +225,11 @@ const MastersAdmin = () => {
               ))}
             </select>
             {master.id ? (
-              <button onClick={handleUpdateButton}>Update</button>
+              <button className="modal__button" onClick={handleUpdateButton}>Update</button>
             ) : (
-              <button onClick={handleAddButton}>Add</button>
+              <button className="modal__button modal__button--add" onClick={handleAddButton}>Add</button>
             )}
-            <button onClick={handleCloseButton}>Close</button>
+            <button className="modal__button modal__button--close" onClick={handleCloseButton}>Close</button>
           </div>
         </div>
       )}

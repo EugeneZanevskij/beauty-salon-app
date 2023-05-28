@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import '../styles/AdminLayout.css';
+import '../styles/Modal.css'
 
 const AdminLayout = () => {
   return (

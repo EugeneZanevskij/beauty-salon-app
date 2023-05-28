@@ -118,8 +118,8 @@ const CategoriesAdmin = () => {
           <div className="modal__content">
             <h2 className="modal__title">Category</h2>
             <input className="modal__input" type="text" placeholder='Category Name' onChange={handleChange} value={category.category} name='category'/>
-            {category.id ? <button onClick={handleUpdateButton}>Update</button> : <button onClick={handleAddButton}>Add</button>}
-            <button onClick={handleCloseButton}>Close</button>
+            {category.id ? <button className="modal__button modal__button--update" onClick={handleUpdateButton}>Update</button> : <button className="modal__button modal__button--add" onClick={handleAddButton}>Add</button>}
+            <button className="modal__button modal__button--close" onClick={handleCloseButton}>Close</button>
           </div>
         </div>
       )}
