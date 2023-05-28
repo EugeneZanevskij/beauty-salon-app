@@ -9,7 +9,7 @@ const HomeLayout = () => {
   return (
     <>
       <header className="header">
-        <h1 className="header__title">Welcome to Beauty Salon!</h1>
+        <h1 className="header__title">Z&Z Beauty Lounge</h1>
         <nav className="header__nav">
           <ul className="header__nav-list">
             <li className="header__nav-item">
