@@ -1,0 +1,18 @@
+.admin-services__title {
+  text-align: center;
+}
+
+.admin-services__table .table__row:nth-of-type(odd) {
+  background-color: rgba(124, 195, 136, 0.4);
+}
+.admin-services__table .table__row:nth-of-type(even) {
+  background-color: #96eeeb;
+}
+
+.admin-services__table .table__header {
+  background-color: #d38bbc;
+}
+
+.admin-services__table .table__data:nth-of-type(even) {
+  background-color: #e7c6b7;
+}

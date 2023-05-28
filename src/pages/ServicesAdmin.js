@@ -99,10 +99,10 @@ const ServicesAdmin = () => {
   };
 
   return (
-    <>
-      <div>ServicesAdmin</div>
+    <div className='admin-services'>
+      <h1 className='admin-services__title'>Administrate Services</h1>
       <button  className='table__button table__button--add' onClick={toggleModal}>Add Service</button>
-      <table className="table">
+      <table className="table admin-services__table">
         <thead>
           <tr className="table__row">
             <th className="table__header">Service ID</th>
@@ -174,7 +174,7 @@ const ServicesAdmin = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
 
