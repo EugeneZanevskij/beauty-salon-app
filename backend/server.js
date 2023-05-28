@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const db = require('./database/db');
 const masterServicesRouter = require('./routes/masterServicesRouter');
+const bookingsRouter = require('./routes/bookingsRouter');
 // const routes = require('./routes');
 
 // Middleware
@@ -365,6 +366,55 @@ app.delete('/api/admin/services/:id', (req, res) => {
 });
 
 app.use('/api/admin/master_services', masterServicesRouter);
+
+// Assuming you have already set up your Express.js server and connected to the database
+
+// Handle the POST request to the /api/bookings endpoint
+app.post('/api/bookings', (req, res) => {
+  const { date, time, masterName, serviceName } = req.body;
+  const { userId } = req.headers; // Assuming you set the user ID in the headers
+
+  // Fetch the master ID based on the master name
+  const getMasterIdQuery = 'SELECT id FROM master WHERE name = ?';
+  db.query(getMasterIdQuery, [masterName], (err, masterResult) => {
+    if (err) {
+      console.error('Error fetching master ID:', err);
+      res.status(500).send({ error: 'An error occurred while fetching master ID' });
+    } else {
+      const masterId = masterResult[0].id;
+
+      // Fetch the service ID based on the service name
+      const getServiceIdQuery = 'SELECT id FROM services WHERE name = ?';
+      db.query(getServiceIdQuery, [serviceName], (err, serviceResult) => {
+        if (err) {
+          console.error('Error fetching service ID:', err);
+          res.status(500).send({ error: 'An error occurred while fetching service ID' });
+        } else {
+          const serviceId = serviceResult[0].id;
+
+          // Perform the necessary validation and booking logic here
+          // Example: Check availability, double bookings, etc.
+
+          // Assuming you have a MySQL database connection established
+          const insertBookingQuery = 'INSERT INTO client_master_services (client_id, master_service_id, date_signup, time_signup) VALUES (?, ?, ?, ?)';
+          const values = [userId, masterId, date, time];
+
+          db.query(insertBookingQuery, values, (err, result) => {
+            if (err) {
+              console.error('Error creating booking:', err);
+              res.status(500).send({ error: 'An error occurred while creating the booking' });
+            } else {
+              // Booking created successfully
+              res.status(200).send({ message: 'Booking created successfully' });
+            }
+          });
+        }
+      });
+    }
+  });
+});
+
+app.use('/api/bookings', bookingsRouter);
 
 // Routes
 // app.use('/api', routes);
