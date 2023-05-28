@@ -9,6 +9,7 @@ const BookingForm = () => {
     service_id: '',
   });
   const [masterServicesId, setMasterServicesId] = useState();
+  const [clientId, setClientId] = useState();
   const [masters, setMasters] = useState([]);
   const [services, setServices] = useState([]);
 
@@ -49,76 +50,103 @@ const BookingForm = () => {
     fetchMasters(e);
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    fetchMasterServicesId(e).then(() => {
-      console.log(masterServicesId);
-    });
-    // const masterServices = await api.get('/api/admin/master_services');
-    // api.post('/api/bookings/bookings', bookingData)
-    //   .then((response) => {
-    //     // Handle successful submission
-    //     console.log('Booking submitted:', response.data);
-    //   })
-    //   .catch((error) => {
-    //     // Handle error
-    //     console.error('Error submitting booking:', error);
-    //   });
-  };
-
-  // const fetchMasterServicesId = async (e) => {
-  //   api.get('/api/admin/master_services')
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  
+  //   await fetchMasterServicesId(e);
+  //   await fetchClientId();
+  
+  //   const booking = {
+  //     client_id: clientId,
+  //     master_service_id: masterServicesId,
+  //     date_signup: bookingData.date,
+  //     time_signup: bookingData.time,
+  //   };
+  
+  //   api.post('/api/bookings/bookings', booking)
   //     .then((response) => {
-  //       const connections = response.data;
-  //       console.log(connections);
-  //       console.log(bookingData);
-  //       const matchingConnection = connections.filter(
-  //         (connection) =>
-  //           connection.master_id == bookingData.master_id &&
-  //           connection.service_id == bookingData.service_id
-  //       );
-  //       if (matchingConnection) {
-  //         setMasterServicesId(matchingConnection.id);
-  //       } else {
-  //         console.error('No matching connection found.');
-  //       }
+  //       // Handle successful submission
+  //       console.log('Booking submitted:', response.data);
   //     })
   //     .catch((error) => {
-  //       console.error('Error fetching services:', error);
+  //       // Handle error
+  //       console.error('Error submitting booking:', error);
   //     });
   // };
-  const fetchMasterServicesId = async (e) => {
-    const requestData = {
-      master_id: +bookingData.master_id,
-      service_id: +bookingData.service_id
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    // Fetch masterServicesId and clientId
+    await fetchMasterServicesId(e);
+    await fetchClientId();
+  
+    // Create booking object
+    const booking = {
+      client_id: clientId,
+      master_service_id: masterServicesId,
+      date_signup: bookingData.date,
+      time_signup: bookingData.time,
     };
   
-    api.post('/api/bookings/find', requestData)
-      .then((response) => {
-        const connection = response.data;
-        if (connection) {
-          setMasterServicesId(connection.id);
-        } else {
-          console.error('No matching connection found.');
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching services:', error);
-      });
+    // Make the API call
+    try {
+      const response = await api.post('/api/bookings/bookings', booking);
+      // Handle successful submission
+      console.log('Booking submitted:', response.data);
+    } catch (error) {
+      // Handle error
+      console.error('Error submitting booking:', error);
+    }
   };
   
-  // const fetchMasterServicesId = async (e) => {
-  //   api.get('/api/admin/master_services')
-  //     .then((response) => {
-  //       const connections = response.data;
-  //       console.log(bookingData);
-  //       // setMasterServicesId(connections);
-  //       setMasterServicesId(connections.filter((connection) => connection.master_id === bookingData.master_id).filter((connection) => connection.service_id === bookingData.service_id)[0]);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching services:', error);
-  //     });
-  // };
+
+  // Client-side code
+  const fetchClientId = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem('user')); // Assuming the user object is stored in localStorage
+  
+      if (user && user.email) {
+        const { email } = user;
+  
+        const response = await api.post('/api/bookings/find_client', { email });
+        const client = response.data;
+  
+        if (client && client.id) {
+          setClientId(client.id);
+        } else {
+          console.error('Client not found.');
+        }
+      } else {
+        console.error('User email not found in localStorage');
+      }
+    } catch (error) {
+      console.error('Error fetching client data:', error);
+    }
+  };
+  
+
+
+
+  const fetchMasterServicesId = async (e) => {
+    try {
+      const requestData = {
+        master_id: bookingData.master_id,
+        service_id: bookingData.service_id,
+      };
+  
+      const response = await api.post('/api/bookings/find_ms', requestData);
+      const connection = response.data;
+  
+      if (connection) {
+        setMasterServicesId(connection.id);
+      } else {
+        console.error('No matching connection found.');
+      }
+    } catch (error) {
+      console.error('Error fetching services:', error);
+    }
+  };
+  
 
   return (
     <form onSubmit={handleSubmit}>
