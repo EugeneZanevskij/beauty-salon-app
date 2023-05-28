@@ -1,0 +1,14 @@
+.account-page {
+  padding: 20px;
+}
+
+.user-info {
+  background-color: #f4f4f4;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.user-info p {
+  margin-bottom: 5px;
+}

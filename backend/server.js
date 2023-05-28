@@ -123,6 +123,25 @@ app.get('/api/appointments', (req, res) => {
   });
 });
 
+app.get('/api/user/:email', (req, res) => {
+  const email = req.params.email;
+
+  // Assuming you have a database connection, you can query the user information
+  // based on the provided email
+  db.query('SELECT * FROM client WHERE email = ?', email, (err, result) => {
+    if (err) {
+      console.error('Error retrieving user:', err);
+      res.status(500).json({ error: 'Error retrieving user' });
+    } else if (result.length === 0) {
+      res.status(404).json({ message: 'User not found' });
+    } else {
+      const user = result[0]; // Assuming the email is unique and returns only one user
+      res.json(user);
+    }
+  });
+});
+
+
 
 
 app.get('/api/admin/clients', (req, res) => {
