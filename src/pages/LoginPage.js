@@ -18,8 +18,9 @@ const LoginPage = () => {
     })
       .then((response) => {
         const data = response.data;
-        // localStorage.setItem('user', JSON.stringify(data));
-        navigate('/account');
+        localStorage.setItem('user', JSON.stringify(data));
+        // navigate('/account');
+        window.location.href = '/account';
       })
       .catch((error) => {
         // Handle login error
