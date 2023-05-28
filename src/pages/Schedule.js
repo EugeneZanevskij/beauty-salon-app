@@ -21,28 +21,28 @@ const Schedule = () => {
   }, []);
 
   return (
-    <div className="schedule-page">
-      <h1>Schedule</h1>
-      <table className="schedule-table">
+    <div className="about-schedule">
+      <h1 className="about-schedule__title">Schedule</h1>
+      <table className="about-schedule__table table">
         <thead>
-          <tr>
-            <th>ID</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Client</th>
-            <th>Master</th>
-            <th>Service</th>
+          <tr className="table__row">
+            <th className="table__header">ID</th>
+            <th className="table__header">Date</th>
+            <th className="table__header">Time</th>
+            <th className="table__header">Client</th>
+            <th className="table__header">Master</th>
+            <th className="table__header">Service</th>
           </tr>
         </thead>
         <tbody>
           {appointments.map((appointment) => (
-            <tr key={appointment.id}>
-              <td>{appointment.id}</td>
-              <td>{formatDate(appointment.date_signup)}</td>
-              <td>{appointment.time_signup}</td>
-              <td>{appointment.firstName} {appointment.lastName}</td>
-              <td>{appointment.masterFirstName} {appointment.masterLastName}</td>
-              <td>{appointment.serviceName}</td>
+            <tr className="table__row" key={appointment.id}>
+              <td className="table__data">{appointment.id}</td>
+              <td className="table__data">{formatDate(appointment.date_signup)}</td>
+              <td className="table__data">{appointment.time_signup}</td>
+              <td className="table__data">{appointment.firstName} {appointment.lastName}</td>
+              <td className="table__data">{appointment.masterFirstName} {appointment.masterLastName}</td>
+              <td className="table__data">{appointment.serviceName}</td>
             </tr>
           ))}
         </tbody>

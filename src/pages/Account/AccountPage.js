@@ -65,7 +65,7 @@ const AccountPage = () => {
       ) : (
         <p>Loading user information...</p>
       )}
-    <div className="schedule-page">
+    <div>
       <h1>Appointments</h1>
       <table className="table">
         <thead>
