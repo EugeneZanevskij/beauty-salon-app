@@ -26,15 +26,41 @@
 }
 
 .table__button {
-  background-color: #f44336;
   color: white;
   border: none;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
   cursor: pointer;
-  margin-right: 4px;
+  margin: 0.25rem;
 }
 
-.table__button:hover {
-  background-color: #d32f2f;
+.table__button--delete {
+  background-color: #f44336;
+}
+
+.table__button--edit {
+  background-color: #2196f3;
+}
+
+.table__button--add {
+  margin: 0.5rem auto;
+  display: block;
+  background-color: #4caf50;
+}
+
+.table__button--delete:hover {
+  background-color: #b71c1c;
+}
+
+.table__button--edit:hover {
+  background-color: #1976d2;
+}
+
+.table__button--add:hover {
+  background-color: #03a9f4;
+}
+
+.table-container {
+  overflow-x: auto;
+  max-width: 100%;
 }

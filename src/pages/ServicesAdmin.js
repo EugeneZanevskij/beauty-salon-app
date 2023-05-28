@@ -101,29 +101,29 @@ const ServicesAdmin = () => {
   return (
     <>
       <div>ServicesAdmin</div>
-      <button onClick={toggleModal}>Add Service</button>
-      <table>
+      <button  className='table__button table__button--add' onClick={toggleModal}>Add Service</button>
+      <table className="table">
         <thead>
-          <tr>
-            <th>Service ID</th>
-            <th>Service Name</th>
-            <th>Category ID</th>
-            <th>Price</th>
-            <th>Duration (Minutes)</th>
-            <th>Actions</th>
+          <tr className="table__row">
+            <th className="table__header">Service ID</th>
+            <th className="table__header">Service Name</th>
+            <th className="table__header">Category ID</th>
+            <th className="table__header">Price</th>
+            <th className="table__header">Duration (Minutes)</th>
+            <th className="table__header">Actions</th>
           </tr>
         </thead>
         <tbody>
           {services.map((service) => (
-            <tr key={service.id}>
-              <td>{service.id}</td>
-              <td>{service.name}</td>
-              <td>{service.category_id}</td>
-              <td>{service.price}</td>
-              <td>{service.duration_minutes}</td>
-              <td>
-                <button onClick={() => handleDelete(service.id)}>Delete</button>
-                <button onClick={() => handleEdit(service)}>Edit</button>
+            <tr className="table__row" key={service.id}>
+              <td className='table__data'>{service.id}</td>
+              <td className='table__data'>{service.name}</td>
+              <td className='table__data'>{service.category_id}</td>
+              <td  className='table__data'>{service.price}</td>
+              <td className='table__data'>{service.duration_minutes}</td>
+              <td className='table__data'>
+                <button className="table__button table__button--delete" onClick={() => handleDelete(service.id)}>Delete</button>
+                <button className="table__button table__button--edit" onClick={() => handleEdit(service)}>Edit</button>
               </td>
             </tr>
           ))}

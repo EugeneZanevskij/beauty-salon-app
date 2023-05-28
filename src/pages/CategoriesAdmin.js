@@ -91,23 +91,23 @@ const CategoriesAdmin = () => {
   return (
     <>
       <div>CategoriesAdmin</div>
-      <button onClick={toggleModal}>Add Category</button>
-      <table>
+      <button className='table__button table__button--add' onClick={toggleModal}>Add Category</button>
+      <table className='table'>
         <thead>
-          <tr>
-            <th>Category ID</th>
-            <th>Category Name</th>
-            <th>Actions</th>
+          <tr className='table__row'>
+            <th className='table__header'>Category ID</th>
+            <th className='table__header'>Category Name</th>
+            <th className='table__header'>Actions</th>
           </tr>
         </thead>
         <tbody>
           {categories.map((category) => (
-            <tr key={category.id}>
-              <td>{category.id}</td>
-              <td>{category.category}</td>
-              <td>
-                <button onClick={() => handleDelete(category.id)}>Delete</button>
-                <button onClick={() => handleEdit(category)}>Edit</button>
+            <tr className='table__row' key={category.id}>
+              <td className='table__data'>{category.id}</td>
+              <td  className='table__data'>{category.category}</td>
+              <td  className='table__data'>
+                <button className='table__button table__button--delete' onClick={() => handleDelete(category.id)}>Delete</button>
+                <button className='table__button table__button--edit' onClick={() => handleEdit(category)}>Edit</button>
               </td>
             </tr>
           ))}

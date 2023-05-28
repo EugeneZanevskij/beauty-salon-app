@@ -157,27 +157,27 @@ const MastersAdmin = () => {
   return (
     <>
       <div>MastersAdmin</div>
-      <button onClick={toggleModal}>Add Master</button>
-      <table>
+      <button  className='table__button table__button--add' onClick={toggleModal}>Add Master</button>
+      <table className='table'>
         <thead>
-          <tr>
-            <th>Master ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Coefficient</th>
-            <th>Actions</th>
+          <tr className='table__row'>
+            <th className='table__header'>Master ID</th>
+            <th className='table__header'>First Name</th>
+            <th className='table__header'>Last Name</th>
+            <th className='table__header'>Coefficient</th>
+            <th className='table__header'>Actions</th>
           </tr>
         </thead>
         <tbody>
           {masters.map((master) => (
-            <tr key={master.id}>
-              <td>{master.id}</td>
-              <td>{master.firstName}</td>
-              <td>{master.lastName}</td>
-              <td>{master.coefficient}</td>
-              <td>
-                <button onClick={() => handleDelete(master.id)}>Delete</button>
-                <button onClick={() => handleEdit(master)}>Edit</button>
+            <tr className='table__row' key={master.id}>
+              <td className='table__data'>{master.id}</td>
+              <td className='table__data'>{master.firstName}</td>
+              <td className='table__data'>{master.lastName}</td>
+              <td className='table__data'>{master.coefficient}</td>
+              <td className='table__data'>
+                <button className='table__button table__button--delete' onClick={() => handleDelete(master.id)}>Delete</button>
+                <button className='table__button table__button--edit' onClick={() => handleEdit(master)}>Edit</button>
               </td>
             </tr>
           ))}

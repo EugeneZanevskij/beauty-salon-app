@@ -114,36 +114,38 @@ const ClientsAdmin = () => {
   return (
     <>
       <div>ClientsAdmin</div>
-      <button onClick={toggleModal}>Add Client</button>
-      <table>
+      <button  className='table__button table__button--add' onClick={toggleModal}>Add Client</button>
+      <div className="table-container">
+      <table className='table'>
         <thead>
-          <tr>
-            <th>Client ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Phone Number</th>
-            <th>Email</th>
-            <th>Birthday</th>
-            <th>Actions</th>
+          <tr className='table__row'>
+            <th className='table__header'>Client ID</th>
+            <th className='table__header'>First Name</th>
+            <th className='table__header'>Last Name</th>
+            <th className='table__header'>Phone Number</th>
+            <th className='table__header'>Email</th>
+            <th className='table__header'>Birthday</th>
+            <th className='table__header'>Actions</th>
           </tr>
         </thead>
         <tbody>
           {clients.map((client) => (
-            <tr key={client.id}>
-              <td>{client.id}</td>
-              <td>{client.firstName}</td>
-              <td>{client.lastName}</td>
-              <td>{client.phone_number}</td>
-              <td>{client.email}</td>
-              <td>{formatDate(client.birthday)}</td>
+            <tr className='table__row' key={client.id}>
+              <td className='table__data'>{client.id}</td>
+              <td className='table__data'>{client.firstName}</td>
+              <td className='table__data'>{client.lastName}</td>
+              <td className='table__data'>{client.phone_number}</td>
+              <td className='table__data'>{client.email}</td>
+              <td className='table__data'>{formatDate(client.birthday)}</td>
               <td>
-                <button onClick={() => handleDelete(client.id)}>Delete</button>
-                <button onClick={() => handleEdit(client)}>Edit</button>
+                <button className='table__button table__button--delete' onClick={() => handleDelete(client.id)}>Delete</button>
+                <button className='table__button table__button--edit' onClick={() => handleEdit(client)}>Edit</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
       {showModal && (
         <div className="modal">
           <div className="modal__content">
