@@ -4,20 +4,30 @@ import '../../styles/AccountPage.css';
 
 const AccountPage = () => {
   const [user, setUser] = useState(null);
+  const [appointments, setAppointments] = useState([]);
 
+  const loadUser = (email) => {
+    api.get(`/api/user/${email}`)
+    .then((response) => {
+      const userData = response.data;
+      setUser(userData);
+    })
+    .catch((error) => {
+      console.error('Error retrieving user information:', error);
+    });
+  }
+  const loadAppointments = async (email) => {
+    const response = await api.get('/api/appointments');
+    const data = response.data;
+    setAppointments(data.filter((appointment) => appointment.email === email));
+  };
+  
   useEffect(() => {
-    // Retrieve user information from the API based on the logged-in user's email
     const loggedInUser = JSON.parse(localStorage.getItem('user'));
     const email = loggedInUser.email;
-
-    api.get(`/api/user/${email}`)
-      .then((response) => {
-        const userData = response.data;
-        setUser(userData);
-      })
-      .catch((error) => {
-        console.error('Error retrieving user information:', error);
-      });
+    loadUser(email);
+    loadAppointments(email);
+    // Retrieve user information from the API based on the logged-in user's email
   }, []);
 
   const formatDate = (date) => {
@@ -50,6 +60,31 @@ const AccountPage = () => {
       ) : (
         <p>Loading user information...</p>
       )}
+    <div className="schedule-page">
+      <h1>Appointments</h1>
+      <table className="schedule-table">
+        <thead>
+          <tr>
+            {/* <th>ID</th> */}
+            <th>Date</th>
+            <th>Time</th>
+            <th>Master</th>
+            <th>Service</th>
+          </tr>
+        </thead>
+        <tbody>
+          {appointments.map((appointment) => (
+            <tr key={appointment.id}>
+              {/* <td>{appointment.id}</td> */}
+              <td>{formatDate(appointment.date_signup)}</td>
+              <td>{appointment.time_signup}</td>
+              <td>{appointment.masterFirstName} {appointment.masterLastName}</td>
+              <td>{appointment.serviceName}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
     </div>
   );
 };

@@ -105,7 +105,7 @@ app.get('/api/masters', (req, res) => {
 
 app.get('/api/appointments', (req, res) => {
   const query = `
-    SELECT a.id, c.firstName, c.lastName, a.date_signup, a.time_signup, m.firstName as masterFirstName, m.lastName as masterLastName, s.name as serviceName
+    SELECT a.id, c.email, c.firstName, c.lastName, a.date_signup, a.time_signup, m.firstName as masterFirstName, m.lastName as masterLastName, s.name as serviceName
     FROM client_master_services a
     INNER JOIN client c ON a.client_id = c.id
     INNER JOIN master_services ms ON a.master_service_id = ms.id
