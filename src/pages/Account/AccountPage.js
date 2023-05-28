@@ -67,22 +67,22 @@ const AccountPage = () => {
       )}
     <div className="schedule-page">
       <h1>Appointments</h1>
-      <table className="schedule-table">
+      <table className="table">
         <thead>
-          <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Master</th>
-            <th>Service</th>
+          <tr className='table__row'>
+            <th className="table__header">Date</th>
+            <th className="table__header">Time</th>
+            <th className="table__header">Master</th>
+            <th className="table__header">Service</th>
           </tr>
         </thead>
         <tbody>
           {appointments.map((appointment) => (
-            <tr key={appointment.id}>
-              <td>{formatDate(appointment.date_signup)}</td>
-              <td>{appointment.time_signup}</td>
-              <td>{appointment.masterFirstName} {appointment.masterLastName}</td>
-              <td>{appointment.serviceName}</td>
+            <tr className="table__row" key={appointment.id}>
+              <td className="table__data">{formatDate(appointment.date_signup)}</td>
+              <td className="table__data">{appointment.time_signup}</td>
+              <td className="table__data">{appointment.masterFirstName} {appointment.masterLastName}</td>
+              <td className="table__data">{appointment.serviceName}</td>
             </tr>
           ))}
         </tbody>

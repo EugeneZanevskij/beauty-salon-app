@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import '../styles/HomeLayout.css';
+import '../styles/Table.css';
 import { isAuthenticated } from '../utils/auth';
 
 const HomeLayout = () => {

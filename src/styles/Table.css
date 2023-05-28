@@ -1,0 +1,40 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table__row {
+  border-bottom: 0.125rem solid #131596;
+}
+.table__row:nth-of-type(odd) {
+  background-color: #d9f9e3;
+}
+
+.table__header {
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: bold;
+  background-color: #a1a2ed;
+}
+
+.table__data {
+  padding: 0.5rem;
+  text-align: left;
+}
+.table__data:nth-of-type(even) {
+  background-color: #b7d6e7;
+}
+
+.table__button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 4px;
+}
+
+.table__button:hover {
+  background-color: #d32f2f;
+}
