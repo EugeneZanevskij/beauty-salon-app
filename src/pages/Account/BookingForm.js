@@ -80,22 +80,40 @@ const BookingForm = () => {
     await fetchMasterServicesId(e);
     await fetchClientId();
   
-    // Create booking object
-    const booking = {
-      client_id: clientId,
-      master_service_id: masterServicesId,
-      date_signup: bookingData.date,
-      time_signup: bookingData.time,
-    };
+    console.log(masterServicesId);
+    console.log(clientId);
   
-    // Make the API call
-    try {
-      const response = await api.post('/api/bookings/bookings', booking);
-      // Handle successful submission
-      console.log('Booking submitted:', response.data);
-    } catch (error) {
-      // Handle error
-      console.error('Error submitting booking:', error);
+    // Check if masterServicesId and clientId are set
+    if (masterServicesId && clientId) {
+      // Create booking object
+      const booking = {
+        client_id: clientId,
+        master_service_id: masterServicesId,
+        date_signup: bookingData.date,
+        time_signup: bookingData.time,
+      };
+  
+      // Make the API call
+      try {
+        const response = await api.post('/api/bookings/bookings', booking);
+        // Handle successful submission
+        console.log('Booking submitted:', response.data);
+        setBookingData({
+          date: '',
+          time: '',
+          master_id: '',
+          service_id: '',
+        });
+        setClientId(null);
+        setMasterServicesId(null);
+        setMasters([]);
+
+      } catch (error) {
+        // Handle error
+        console.error('Error submitting booking:', error);
+      }
+    } else {
+      console.log('Click once again');
     }
   };
   
@@ -169,7 +187,7 @@ const BookingForm = () => {
       <label>Master:</label>
       <select
         name="master_id"
-        value={bookingData.master}
+        value={bookingData.master_id}
         onChange={handleChange}
       >
         <option value="">Select a master</option>
