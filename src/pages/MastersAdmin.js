@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../api';
+import '../styles/MastersAdmin.css';
 
 const MastersAdmin = () => {
   const [masters, setMasters] = useState([]);
@@ -57,7 +58,6 @@ const MastersAdmin = () => {
     setShowModal(!showModal);
   };
 
-  //TODO: check
   const handleAddButton = async (e) => {
   e.preventDefault();
   try {
@@ -155,10 +155,10 @@ const MastersAdmin = () => {
   };
 
   return (
-    <>
-      <div>MastersAdmin</div>
+    <div className='admin-masters'>
+      <h1 className='admin-masters__title'>Administrate Masters</h1>
       <button  className='table__button table__button--add' onClick={toggleModal}>Add Master</button>
-      <table className='table'>
+      <table className='admin-masters__table table'>
         <thead>
           <tr className='table__row'>
             <th className='table__header'>Master ID</th>
@@ -233,7 +233,7 @@ const MastersAdmin = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
