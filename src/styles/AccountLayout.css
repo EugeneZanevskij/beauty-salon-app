@@ -1,0 +1,29 @@
+.account__navigation {
+  background-color: #B7DEF0;
+}
+
+.account__navigation-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.account__navigation-item {
+  padding: 1rem;
+}
+
+.account__navigation-item:hover {
+  background-color: rgba(237, 205, 183, 0.8);
+}
+
+.account__navigation-link {
+  text-decoration: none;
+  color: #292929;
+  font-weight: bold;
+}
+
+.account__navigation-link:hover {
+  color: #2300D5;
+}
