@@ -27,7 +27,6 @@ const AccountPage = () => {
     const email = loggedInUser.email;
     loadUser(email);
     loadAppointments(email);
-    // Retrieve user information from the API based on the logged-in user's email
   }, []);
 
   const formatDate = (date) => {
@@ -37,6 +36,11 @@ const AccountPage = () => {
     const day = String(dateObject.getDate()).padStart(2, '0');
     const formattedDate = `${year}-${month}-${day}`;
     return formattedDate;
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    window.location.href = ('/');
   };
 
   return (
@@ -56,6 +60,7 @@ const AccountPage = () => {
           <p>
             <strong>Birthday:</strong> {formatDate(user.birthday)}
           </p>
+          <button onClick={handleLogout}>Logout</button>
         </div>
       ) : (
         <p>Loading user information...</p>
@@ -65,7 +70,6 @@ const AccountPage = () => {
       <table className="schedule-table">
         <thead>
           <tr>
-            {/* <th>ID</th> */}
             <th>Date</th>
             <th>Time</th>
             <th>Master</th>
@@ -75,7 +79,6 @@ const AccountPage = () => {
         <tbody>
           {appointments.map((appointment) => (
             <tr key={appointment.id}>
-              {/* <td>{appointment.id}</td> */}
               <td>{formatDate(appointment.date_signup)}</td>
               <td>{appointment.time_signup}</td>
               <td>{appointment.masterFirstName} {appointment.masterLastName}</td>
