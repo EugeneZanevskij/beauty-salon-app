@@ -52,7 +52,7 @@ app.post('/api/login', (req, res) => {
       return;
     }
 
-    res.status(200).send({ message: 'Login successful', client });
+    res.status(200).send({email: client.email, password: client.password});
   });
 });
 

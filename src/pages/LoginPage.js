@@ -18,11 +18,7 @@ const LoginPage = () => {
     })
       .then((response) => {
         const data = response.data;
-        // Store the user data in local storage or set an authentication token
-        console.log(data);
         // localStorage.setItem('user', JSON.stringify(data));
-
-        // Use history.push to change the address without reloading
         navigate('/account');
       })
       .catch((error) => {
