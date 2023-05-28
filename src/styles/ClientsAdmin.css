@@ -1,0 +1,14 @@
+.admin-clients__title {
+  text-align: center;
+}
+
+.admin-clients__table .table__row:nth-of-type(odd) {
+  background-color: #d5e9be;
+}
+.admin-clients__table .table__row:nth-of-type(even) {
+  background-color: #cfe6e4;
+}
+
+.admin-clients__table .table__header {
+  background-color: #78cef9;
+}

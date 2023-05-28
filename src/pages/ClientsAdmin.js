@@ -112,10 +112,10 @@ const ClientsAdmin = () => {
   };
 
   return (
-    <>
-      <div>ClientsAdmin</div>
-      <button  className='table__button table__button--add' onClick={toggleModal}>Add Client</button>
-      <div className="table-container">
+    <div className='admin-clients'>
+      <h1 className='admin-clients__title'>Administrate Clients</h1>
+      <button className='table__button table__button--add' onClick={toggleModal}>Add Client</button>
+      <div className="admin-clients__table table-container">
       <table className='table'>
         <thead>
           <tr className='table__row'>
@@ -199,7 +199,7 @@ const ClientsAdmin = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

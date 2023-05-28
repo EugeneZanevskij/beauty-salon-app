@@ -13,7 +13,3 @@
 .about-schedule__table .table__header {
   background-color: #f97878;
 }
-
-.schedule-table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
