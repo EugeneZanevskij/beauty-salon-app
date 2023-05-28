@@ -11,9 +11,51 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// app.get("/", (req, res) => {
-//   res.send("API is currently running");
-// });
+
+app.post('/api/register', (req, res) => {
+  const { firstName, lastName, phone_number, email, birthday, password } = req.body;
+
+  const insertClientQuery = 'INSERT INTO client (firstName, lastName, phone_number, email, birthday, password) VALUES (?, ?, ?, ?, ?, ?)';
+  db.query(
+    insertClientQuery,
+    [firstName, lastName, phone_number, email, birthday, password],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send({ message: 'Error registering client' });
+        return;
+      }
+      res.status(200).send({ message: 'Registration successful' });
+    }
+  );
+});
+
+app.post('/api/login', (req, res) => {
+  const { email, password } = req.body;
+
+  const selectClientQuery = 'SELECT * FROM client WHERE email = ?';
+  db.query(selectClientQuery, [email], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send({ message: 'Error fetching client' });
+      return;
+    }
+
+    if (result.length === 0) {
+      res.status(401).send({ message: 'User doesn\'t exist' });
+      return;
+    }
+
+    const client = result[0];
+    if (client.password !== password) {
+      res.status(401).send({ message: 'Wrong email/password combination' });
+      return;
+    }
+
+    res.status(200).send({ message: 'Login successful', client });
+  });
+});
+
 
 app.get('/api/categories', (req, res) => {
   const categoriesData = `SELECT id, category FROM category`;

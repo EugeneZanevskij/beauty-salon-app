@@ -18,6 +18,7 @@ import AccountLayout from './layouts/AccountLayout';
 import AccountPage from './pages/Account/AccountPage';
 import BookingPage from './pages/Account/BookingPage';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -41,6 +42,7 @@ const router = createBrowserRouter(
         <Route path='booking' element={<BookingPage />} />
       </Route>
       <Route path='login' element={<LoginPage />} />
+      <Route path='register' element={<RegisterPage />} />
     </Route>
   )
 )
