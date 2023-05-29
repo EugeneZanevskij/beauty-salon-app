@@ -31,15 +31,13 @@ const Masters = () => {
   return (
     <div className="about__masters">
       <h1 className="about__masters-title">Masters</h1>
-      <div className="about__masters-filters">
-        <input
-          className="about__masters-filters__input"
-          type="text"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          placeholder="Search masters"
-        />
-      </div>
+      <input
+        className="about__masters-search"
+        type="text"
+        value={searchQuery}
+        onChange={handleSearchChange}
+        placeholder="Search masters"
+      />
       <div className="about__masters-masters">
         {filteredMasters.map((master) => (
           <div key={master.id} className="about__masters-masters__card">
@@ -48,13 +46,13 @@ const Masters = () => {
               <strong>Coefficient:</strong> {master.coefficient}
             </div>
             <h3 className="about__masters-masters__card-title">Services:</h3>
+            <ul className="about__masters-masters__card-list">
               {master.services.map((service) => (
-                <ul key={service.id} className="about__masters-masters__card-list">
-                  <li className="about__masters-masters__card-info">
+                  <li key={service.id} className="about__masters-masters__card-info">
                     <span>{service.name}</span>{service.category}
                   </li>
-                </ul>
               ))}
+              </ul>
           </div>
         ))}
       </div>
