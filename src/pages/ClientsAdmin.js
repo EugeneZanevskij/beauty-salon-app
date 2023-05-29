@@ -15,16 +15,14 @@ const ClientsAdmin = () => {
     birthday: '',
   });
   const [appointments, setAppointments] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const loadAppointments = async (email) => {
-    const response = await api.get('/api/appointments');
-    const data = response.data;
-    setAppointments(data.filter((appointment) => appointment.email === email));
+  const handleChange = (e) => {
+    setClient({
+      ...client,
+      [e.target.name]: e.target.value,
+    });
   };
-
-  useEffect(() => {
-    fetchClients();
-  }, []);
 
   const fetchClients = async () => {
     try {
@@ -34,20 +32,13 @@ const ClientsAdmin = () => {
       console.error('Error fetching clients:', error);
     }
   };
-
-  const handleChange = (e) => {
-    setClient({
-      ...client,
-      [e.target.name]: e.target.value,
-    });
-  };
+  
+  useEffect(() => {
+    fetchClients();
+  }, []);
 
   const toggleModal = () => {
     setShowModal(!showModal);
-  };
-
-  const toggleViewModal = () => {
-    setViewModal(!viewModal);
   };
 
   const handleAddButton = async (e) => {
@@ -123,15 +114,43 @@ const ClientsAdmin = () => {
     return formattedDate;
   };
 
+  
+  const loadAppointments = async (email) => {
+    const response = await api.get('/api/appointments');
+    const data = response.data;
+    setAppointments(data.filter((appointment) => appointment.email === email));
+  };
+
+  const toggleViewModal = () => {
+    setViewModal(!viewModal);
+  };
+
   const handleViewButton = (client) => {
     setClient(client);
     loadAppointments(client.email);
     toggleViewModal();
   }
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredClients = clients.filter((client) => {
+    const firstNameMatch = client.firstName.toLowerCase().includes(searchQuery.toLowerCase());
+    const lastNameMatch = client.lastName.toLowerCase().includes(searchQuery.toLowerCase());
+    return firstNameMatch || lastNameMatch;
+  })
+
   return (
     <div className='admin-clients'>
       <h1 className='admin-clients__title'>Administrate Clients</h1>
+      <input
+        className="admin-clients__search"
+        type="text"
+        value={searchQuery}
+        onChange={handleSearchChange}
+        placeholder="Search clients"
+      />
       <button className='table__button table__button--add' onClick={toggleModal}>Add Client</button>
       <div className="admin-clients__table table-container">
       <table className='table'>
@@ -147,7 +166,7 @@ const ClientsAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {clients.map((client) => (
+          {filteredClients.map((client) => (
             <tr className='table__row' key={client.id}>
               <td className='table__data'>{client.id}</td>
               <td className='table__data'>{client.firstName}</td>
