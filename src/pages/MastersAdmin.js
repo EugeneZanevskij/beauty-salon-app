@@ -13,12 +13,8 @@ const MastersAdmin = () => {
     coefficient: 0,
     selectedServices: [],
   });
-
-  useEffect(() => {
-    fetchMasters();
-    fetchServices();
-  }, []);
-
+  const [searchQuery, setSearchQuery] = useState('');
+  
   const fetchMasters = async () => {
     try {
       const response = await api.get('/api/admin/masters');
@@ -27,7 +23,7 @@ const MastersAdmin = () => {
       console.error('Error fetching masters:', error);
     }
   };
-
+  
   const fetchServices = async () => {
     try {
       const response = await api.get('/api/services');
@@ -36,6 +32,11 @@ const MastersAdmin = () => {
       console.error('Error fetching services:', error);
     }
   };
+  
+  useEffect(() => {
+    fetchMasters();
+    fetchServices();
+  }, []);
 
   const handleChange = (e) => {
     if (e.target.name === 'selectedServices') {
@@ -154,9 +155,26 @@ const MastersAdmin = () => {
     toggleModal();
   };
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredMasters = masters.filter((master) => {
+    const firstNameMatch = master.firstName.toLowerCase().includes(searchQuery.toLowerCase());
+    const lastNameMatch = master.lastName.toLowerCase().includes(searchQuery.toLowerCase());
+    return firstNameMatch || lastNameMatch;
+  });
+
   return (
     <div className='admin-masters'>
       <h1 className='admin-masters__title'>Administrate Masters</h1>
+      <input
+        className="admin-masters__search"
+        type="text"
+        value={searchQuery}
+        onChange={handleSearchChange}
+        placeholder="Search masters"
+      />
       <button  className='table__button table__button--add' onClick={toggleModal}>Add Master</button>
       <table className='admin-masters__table table'>
         <thead>
@@ -169,7 +187,7 @@ const MastersAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {masters.map((master) => (
+          {filteredMasters.map((master) => (
             <tr className='table__row' key={master.id}>
               <td className='table__data'>{master.id}</td>
               <td className='table__data'>{master.firstName}</td>
