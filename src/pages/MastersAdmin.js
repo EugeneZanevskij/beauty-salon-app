@@ -6,6 +6,7 @@ const MastersAdmin = () => {
   const [masters, setMasters] = useState([]);
   const [services, setServices] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [viewModal, setViewModal] = useState(false);
   const [master, setMaster] = useState({
     id: null,
     firstName: '',
@@ -13,6 +14,7 @@ const MastersAdmin = () => {
     coefficient: 0,
     selectedServices: [],
   });
+  const [appointments, setAppointments] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   
   const fetchMasters = async () => {
@@ -96,7 +98,7 @@ const MastersAdmin = () => {
       coefficient: 0,
       selectedServices: [],
     });
-    toggleModal();
+    showModal ? toggleModal(): toggleViewModal();
   };
 
   const handleDelete = async (masterId) => {
@@ -155,6 +157,34 @@ const MastersAdmin = () => {
     toggleModal();
   };
 
+  //TODO
+  const loadAppointments = async (firstName, lastName) => {
+    const response = await api.get('/api/appointments');
+    const data = response.data;
+    setAppointments(data.filter((appointment) => 
+    appointment.masterFirstName === firstName
+    && appointment.masterLastName === lastName));
+  };
+
+  const toggleViewModal = () => {
+    setViewModal(!viewModal);
+  };
+
+  const handleViewButton = (master) => {
+    setMaster(master);
+    loadAppointments(master.firstName, master.lastName);
+    toggleViewModal();
+  }
+
+  const formatDate = (date) => {
+    const dateObject = new Date(date);
+    const year = dateObject.getFullYear();
+    const month = String(dateObject.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObject.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+  };
+
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
@@ -196,6 +226,7 @@ const MastersAdmin = () => {
               <td className='table__data'>
                 <button className='table__button table__button--delete' onClick={() => handleDelete(master.id)}>Delete</button>
                 <button className='table__button table__button--edit' onClick={() => handleEdit(master)}>Edit</button>
+                <button className='table__button table__button--view' onClick={() => handleViewButton(master)}>View</button>
               </td>
             </tr>
           ))}
@@ -247,6 +278,34 @@ const MastersAdmin = () => {
             ) : (
               <button className="modal__button modal__button--add" onClick={handleAddButton}>Add</button>
             )}
+            <button className="modal__button modal__button--close" onClick={handleCloseButton}>Close</button>
+          </div>
+        </div>
+      )}
+      {viewModal && (
+        <div className="modal">
+          <div className="modal__content">
+            <h2 className="modal__title">{master.firstName} {master.lastName}</h2>
+            <table className="table">
+              <thead>
+                <tr className='table__row'>
+                  <th className="table__header">Date</th>
+                  <th className="table__header">Time</th>
+                  <th className="table__header">Master</th>
+                  <th className="table__header">Service</th>
+                </tr>
+              </thead>
+              <tbody>
+                {appointments.map((appointment) => (
+                  <tr className="table__row" key={appointment.id}>
+                    <td className="table__data">{appointment.firstName} {appointment.lastName}</td>
+                    <td className="table__data">{formatDate(appointment.date_signup)}</td>
+                    <td className="table__data">{appointment.time_signup}</td>
+                    <td className="table__data">{appointment.serviceName}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
             <button className="modal__button modal__button--close" onClick={handleCloseButton}>Close</button>
           </div>
         </div>
