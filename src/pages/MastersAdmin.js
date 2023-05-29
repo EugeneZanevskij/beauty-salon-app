@@ -70,7 +70,7 @@ const MastersAdmin = () => {
     console.log(response.data);
 
     const promises = selectedServices.map((serviceId) =>
-      api.post('/api/admin/master_services', {
+      api.post('/api/master_services', {
         master_id: masterId,
         service_id: serviceId,
       })
@@ -104,7 +104,7 @@ const MastersAdmin = () => {
   const handleDelete = async (masterId) => {
     try {
       await api.delete(`/api/admin/masters/${masterId}`);
-      await api.delete(`/api/admin/master_services/${masterId}`);
+      await api.delete(`/api/master_services/${masterId}`);
       fetchMasters();
     } catch (error) {
       console.error('Error deleting master:', error);
@@ -113,7 +113,7 @@ const MastersAdmin = () => {
 
   const handleEdit = async (master) => {
     try {
-      const response = await api.get(`/api/admin/master_services`);
+      const response = await api.get(`/api/master_services`);
       const selectedServices = response.data.filter(
         (masterService) => masterService.master_id === master.id
       ).map((masterService) => masterService.service_id);
@@ -135,9 +135,9 @@ const MastersAdmin = () => {
       console.log(updatedMaster);
       console.log(selectedServices);
       await api.put(`/api/admin/masters/${updatedMaster.id}`, updatedMaster);
-      await api.delete(`/api/admin/master_services/${updatedMaster.id}`);
+      await api.delete(`/api/master_services/${updatedMaster.id}`);
       const promises = selectedServices.map((serviceId) =>
-        api.post('/api/admin/master_services', {
+        api.post('/api/master_services', {
           master_id: updatedMaster.id,
           service_id: serviceId,
         })

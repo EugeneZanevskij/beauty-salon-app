@@ -325,7 +325,7 @@ app.post('/api/bookings', (req, res) => {
 
 app.use('/api/bookings', bookingsRouter);
 app.use('/api/services', servicesRouter);
-app.use('/api/admin/master_services', masterServicesRouter);
+app.use('/api/master_services', masterServicesRouter);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
