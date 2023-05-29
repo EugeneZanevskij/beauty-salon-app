@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../api';
+import '../styles/LoginPage.css';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -17,39 +20,46 @@ const LoginPage = () => {
       .then((response) => {
         const data = response.data;
         localStorage.setItem('user', JSON.stringify(data));
-        // navigate('/account');
         window.location.href = '/account';
       })
       .catch((error) => {
-        // Handle login error
         console.error('Login error:', error);
-        // Show an error message or take appropriate action
       });
   };
 
+  const handleRegisterButton = (e) => {
+    e.preventDefault();
+    navigate('/register');
+  }
+
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label htmlFor="email">Email</label>
+    <div className="login-page">
+      <h2 className="login-page__title">Login</h2>
+      <form className="login-page__form" onSubmit={handleLogin}>
+        <div className='login-page__form-row'>
+          <label className='login-page__form-label' htmlFor="email">Email</label>
           <input
+            className='login-page__form-input'
             type="text"
             id="email"
             value={email}
+            placeholder='Enter email'
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div>
-          <label htmlFor="password">Password</label>
+        <div className='login-page__form-row'>
+          <label className='login-page__form-label' htmlFor="password">Password</label>
           <input
+            className='login-page__form-input'
             type="password"
             id="password"
             value={password}
+            placeholder='Enter password'
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">Login</button>
+        <button className="login-page__form-button" type="submit">Login</button>
+        <button className="login-page__form-button login-page__form-button--register" type="button" onClick={handleRegisterButton}>Register</button>
       </form>
     </div>
   );
