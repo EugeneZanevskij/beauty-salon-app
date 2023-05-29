@@ -7,6 +7,7 @@ const masterServicesRouter = require('./routes/masterServicesRouter');
 const bookingsRouter = require('./routes/bookingsRouter');
 const servicesRouter = require('./routes/servicesRouter');
 const categoriesRouter = require('./routes/categoriesRouter');
+const mastersRouter = require('./routes/mastersRouter');
 
 // Middleware
 app.use(cors());
@@ -55,25 +56,6 @@ app.post('/api/login', (req, res) => {
     }
 
     res.status(200).send({email: client.email, password: client.password});
-  });
-});
-
-app.get('/api/masters', (req, res) => {
-  const mastersData = `
-  SELECT m.id, m.firstName, m.lastName, m.coefficient, 
-  JSON_ARRAYAGG(JSON_OBJECT('name', s.name, 'category', c.category)) AS services
-  FROM master_services ms
-  INNER JOIN master m ON ms.master_id = m.id
-  INNER JOIN services s ON ms.service_id = s.id
-  INNER JOIN category c ON s.category_id = c.id
-  GROUP BY m.id;
-    `;
-  db.query(mastersData, (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Error retrieving masters' });
-    }
-    res.json(results);
   });
 });
 
@@ -176,92 +158,7 @@ app.delete('/api/admin/clients/:clientId', (req, res) => {
   });
 });
 
-app.get('/api/admin/masters', (req, res) => {
-  const mastersData = `SELECT * FROM master`;
-  db.query(mastersData, (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Error retrieving services' });
-    }
-    res.json(results);
-  });
-});
-
-app.post('/api/admin/masters', (req, res) => {
-  const {firstName, lastName, coefficient} = req.body;
-  const mastersData = `INSERT INTO master (firstName, lastName, coefficient) VALUES (?, ?, ?)`;
-  const values = [firstName, lastName, coefficient];
-  db.query(mastersData, values, (err, result) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Error adding master' });
-    }
-    res.status(201).json({ id: result.insertId, message: 'Master added successfully' });
-  })
-});
-
-app.delete('/api/admin/masters/:id', (req, res) => {
-  const id = req.params.id;
-  const deleteMasterQuery = 'DELETE FROM master WHERE id=?';
-  const values = [id];
-  db.query(deleteMasterQuery, values, (err) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Error deleting master' });
-    }
-    res.status(200).json({ message: `Master deleted successfully` });
-  })
-});
-
-app.put('/api/admin/masters/:id', (req, res) => {
-  const id = req.params.id;
-  const { firstName, lastName, coefficient } = req.body;
-  const updateMasterQuery = 'UPDATE master SET firstName=?, lastName=?, coefficient=? WHERE id=?';
-  const values = [firstName, lastName, coefficient, id];
-  db.query(updateMasterQuery, values, (err) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Error updating master' });
-    }
-    res.status(200).json({ message: 'Master updated successfully' });
-  })
-})
-
-// Handle the POST request to the /api/bookings endpoint
-app.post('/api/bookings', (req, res) => {
-  const { date, time, masterName, serviceName } = req.body;
-  const { userId } = req.headers; // Assuming you set the user ID in the headers
-
-  const getMasterIdQuery = 'SELECT id FROM master WHERE name = ?';
-  db.query(getMasterIdQuery, [masterName], (err, masterResult) => {
-    if (err) {
-      console.error('Error fetching master ID:', err);
-      res.status(500).send({ error: 'An error occurred while fetching master ID' });
-    } else {
-      const masterId = masterResult[0].id;
-      const getServiceIdQuery = 'SELECT id FROM services WHERE name = ?';
-      db.query(getServiceIdQuery, [serviceName], (err, serviceResult) => {
-        if (err) {
-          console.error('Error fetching service ID:', err);
-          res.status(500).send({ error: 'An error occurred while fetching service ID' });
-        } else {
-          const insertBookingQuery = 'INSERT INTO client_master_services (client_id, master_service_id, date_signup, time_signup) VALUES (?, ?, ?, ?)';
-          const values = [userId, masterId, date, time];
-          
-          db.query(insertBookingQuery, values, (err, result) => {
-            if (err) {
-              console.error('Error creating booking:', err);
-              res.status(500).send({ error: 'An error occurred while creating the booking' });
-            } else {
-              res.status(200).send({ message: 'Booking created successfully' });
-            }
-          });
-        }
-      });
-    }
-  });
-});
-
+app.use('/api/masters', mastersRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/api/bookings', bookingsRouter);
 app.use('/api/services', servicesRouter);

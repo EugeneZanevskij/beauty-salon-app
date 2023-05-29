@@ -19,7 +19,7 @@ const MastersAdmin = () => {
   
   const fetchMasters = async () => {
     try {
-      const response = await api.get('/api/admin/masters');
+      const response = await api.get('/api/masters');
       setMasters(response.data);
     } catch (error) {
       console.error('Error fetching masters:', error);
@@ -65,7 +65,7 @@ const MastersAdmin = () => {
   e.preventDefault();
   try {
     const { selectedServices, ...newMaster } = master;
-    const response = await api.post('/api/admin/masters', newMaster);
+    const response = await api.post('/api/masters', newMaster);
     const masterId = response.data.id;
     console.log(response.data);
 
@@ -103,7 +103,7 @@ const MastersAdmin = () => {
 
   const handleDelete = async (masterId) => {
     try {
-      await api.delete(`/api/admin/masters/${masterId}`);
+      await api.delete(`/api/masters/${masterId}`);
       await api.delete(`/api/master_services/${masterId}`);
       fetchMasters();
     } catch (error) {
@@ -132,9 +132,7 @@ const MastersAdmin = () => {
     e.preventDefault();
     try {
       const { selectedServices, ...updatedMaster } = master;
-      console.log(updatedMaster);
-      console.log(selectedServices);
-      await api.put(`/api/admin/masters/${updatedMaster.id}`, updatedMaster);
+      await api.put(`/api/masters/${updatedMaster.id}`, updatedMaster);
       await api.delete(`/api/master_services/${updatedMaster.id}`);
       const promises = selectedServices.map((serviceId) =>
         api.post('/api/master_services', {
@@ -143,7 +141,8 @@ const MastersAdmin = () => {
         })
       );
       await Promise.all(promises);
-      fetchMasters();
+      const response = await api.get('/api/masters');
+      setMasters(response.data); // Update the state with the updated data
     } catch (error) {
       console.error('Error updating master:', error);
     }
@@ -155,7 +154,7 @@ const MastersAdmin = () => {
       selectedServices: [],
     });
     toggleModal();
-  };
+  };  
 
   //TODO
   const loadAppointments = async (firstName, lastName) => {

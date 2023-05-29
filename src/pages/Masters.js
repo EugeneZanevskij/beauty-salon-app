@@ -7,7 +7,7 @@ const Masters = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const loadMasters = async () => {
-    const response = await api.get("/api/masters");
+    const response = await api.get("/api/masters/masters_data");
     setMasters(response.data);
   };
 
