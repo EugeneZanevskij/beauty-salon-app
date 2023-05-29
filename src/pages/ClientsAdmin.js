@@ -5,6 +5,7 @@ import '../styles/ClientsAdmin.css';
 const ClientsAdmin = () => {
   const [clients, setClients] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [viewModal, setViewModal] = useState(false);
   const [client, setClient] = useState({
     id: null,
     firstName: '',
@@ -13,6 +14,13 @@ const ClientsAdmin = () => {
     email: '',
     birthday: '',
   });
+  const [appointments, setAppointments] = useState([]);
+
+  const loadAppointments = async (email) => {
+    const response = await api.get('/api/appointments');
+    const data = response.data;
+    setAppointments(data.filter((appointment) => appointment.email === email));
+  };
 
   useEffect(() => {
     fetchClients();
@@ -36,6 +44,10 @@ const ClientsAdmin = () => {
 
   const toggleModal = () => {
     setShowModal(!showModal);
+  };
+
+  const toggleViewModal = () => {
+    setViewModal(!viewModal);
   };
 
   const handleAddButton = async (e) => {
@@ -66,7 +78,7 @@ const ClientsAdmin = () => {
       email: '',
       birthday: '',
     });
-    toggleModal();
+    showModal ? toggleModal(): toggleViewModal();
   };
 
   const handleDelete = async (clientId) => {
@@ -111,6 +123,12 @@ const ClientsAdmin = () => {
     return formattedDate;
   };
 
+  const handleViewButton = (client) => {
+    setClient(client);
+    loadAppointments(client.email);
+    toggleViewModal();
+  }
+
   return (
     <div className='admin-clients'>
       <h1 className='admin-clients__title'>Administrate Clients</h1>
@@ -140,6 +158,7 @@ const ClientsAdmin = () => {
               <td>
                 <button className='table__button table__button--delete' onClick={() => handleDelete(client.id)}>Delete</button>
                 <button className='table__button table__button--edit' onClick={() => handleEdit(client)}>Edit</button>
+                <button className='table__button table__button--view' onClick={() => handleViewButton(client)}>View</button>
               </td>
             </tr>
           ))}
@@ -195,6 +214,34 @@ const ClientsAdmin = () => {
             ) : (
               <button className="modal__button modal__button--add" onClick={handleAddButton}>Add</button>
             )}
+            <button className="modal__button modal__button--close" onClick={handleCloseButton}>Close</button>
+          </div>
+        </div>
+      )}
+      {viewModal && (
+        <div className="modal">
+          <div className="modal__content">
+            <h2 className="modal__title">{client.firstName} {client.lastName}</h2>
+            <table className="table">
+              <thead>
+                <tr className='table__row'>
+                  <th className="table__header">Date</th>
+                  <th className="table__header">Time</th>
+                  <th className="table__header">Master</th>
+                  <th className="table__header">Service</th>
+                </tr>
+              </thead>
+              <tbody>
+                {appointments.map((appointment) => (
+                  <tr className="table__row" key={appointment.id}>
+                    <td className="table__data">{formatDate(appointment.date_signup)}</td>
+                    <td className="table__data">{appointment.time_signup}</td>
+                    <td className="table__data">{appointment.masterFirstName} {appointment.masterLastName}</td>
+                    <td className="table__data">{appointment.serviceName}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
             <button className="modal__button modal__button--close" onClick={handleCloseButton}>Close</button>
           </div>
         </div>

@@ -47,6 +47,9 @@
   display: block;
   background-color: #4caf50;
 }
+.table__button--view {
+  background-color: #4caf50;
+}
 
 .table__button--delete:hover {
   background-color: #b71c1c;
@@ -54,6 +57,10 @@
 
 .table__button--edit:hover {
   background-color: #1976d2;
+}
+
+.table__button--view:hover {
+  background-color: #296b2b;
 }
 
 .table__button--add:hover {
