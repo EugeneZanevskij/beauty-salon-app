@@ -8,7 +8,7 @@ const AccountPage = () => {
   const [appointments, setAppointments] = useState([]);
 
   const loadUser = (email) => {
-    api.get(`/api/user/${email}`)
+    api.get(`/api/clients/${email}`)
     .then((response) => {
       const userData = response.data;
       setUser(userData);

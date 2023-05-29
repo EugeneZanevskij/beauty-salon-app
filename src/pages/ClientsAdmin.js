@@ -26,7 +26,7 @@ const ClientsAdmin = () => {
 
   const fetchClients = async () => {
     try {
-      const response = await api.get('/api/admin/clients');
+      const response = await api.get('/api/clients');
       setClients(response.data);
     } catch (error) {
       console.error('Error fetching clients:', error);
@@ -44,7 +44,7 @@ const ClientsAdmin = () => {
   const handleAddButton = async (e) => {
     e.preventDefault();
     try {
-      await api.post('/api/admin/clients', client);
+      await api.post('/api/clients', client);
       fetchClients();
     } catch (error) {
       console.error('Error creating client:', error);
@@ -74,7 +74,7 @@ const ClientsAdmin = () => {
 
   const handleDelete = async (clientId) => {
     try {
-      await api.delete(`/api/admin/clients/${clientId}`);
+      await api.delete(`/api/clients/${clientId}`);
       fetchClients();
     } catch (error) {
       console.error('Error deleting client:', error);
@@ -89,7 +89,7 @@ const ClientsAdmin = () => {
   const handleUpdateButton = async (e) => {
     e.preventDefault();
     try {
-      await api.put(`/api/admin/clients/${client.id}`, client);
+      await api.put(`/api/clients/${client.id}`, client);
       fetchClients();
     } catch (error) {
       console.error('Error updating client:', error);
