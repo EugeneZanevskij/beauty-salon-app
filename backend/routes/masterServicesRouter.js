@@ -29,15 +29,25 @@ router.post('/', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   const id = req.params.id;
-  const query = 'DELETE FROM master_services WHERE master_id = ?';
-  db.query(query, id, (error) => {
+  const deleteClientMasterServicesQuery = 'DELETE FROM client_master_services WHERE master_service_id IN (SELECT id FROM master_services WHERE master_id = ?)';
+  const deleteMasterServicesQuery = 'DELETE FROM master_services WHERE master_id = ?';
+
+  db.query(deleteClientMasterServicesQuery, [id], (error) => {
     if (error) {
-      console.error('Error deleting master service:', error);
-      res.status(500).json({ error: 'Failed to delete master service' });
-    } else {
-      res.sendStatus(200);
+      console.error('Error deleting associated client master services:', error);
+      return res.status(500).json({ error: 'Failed to delete associated client master services' });
     }
+
+    db.query(deleteMasterServicesQuery, [id], (error) => {
+      if (error) {
+        console.error('Error deleting master service:', error);
+        return res.status(500).json({ error: 'Failed to delete master service' });
+      }
+
+      res.sendStatus(200);
+    });
   });
 });
+
 
 module.exports = router;
