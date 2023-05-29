@@ -2,6 +2,16 @@
   margin: 1rem;
 }
 
+.about-schedule__title {
+  margin-bottom: 1rem;
+}
+
+.about-schedule__search {
+  padding: 0.5rem 1rem;
+  border: 0.125rem solid #ccc;
+  border-radius: 0.25rem;
+}
+
 .about-schedule__table {
   margin-top: 1rem;
 }
