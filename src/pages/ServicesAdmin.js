@@ -19,7 +19,7 @@ const ServicesAdmin = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await api.get('/api/admin/services');
+      const response = await api.get('/api/services');
       setServices(response.data);
     } catch (error) {
       console.error('Error fetching services:', error);
@@ -40,7 +40,7 @@ const ServicesAdmin = () => {
   const handleAddButton = async (e) => {
     e.preventDefault();
     try {
-      await api.post('/api/admin/services', service);
+      await api.post('/api/services', service);
       fetchServices();
     } catch (error) {
       console.error('Error creating service:', error);
@@ -68,7 +68,7 @@ const ServicesAdmin = () => {
 
   const handleDelete = async (serviceId) => {
     try {
-      await api.delete(`/api/admin/services/${serviceId}`);
+      await api.delete(`/api/services/${serviceId}`);
       fetchServices();
     } catch (error) {
       console.error('Error deleting service:', error);
@@ -83,7 +83,7 @@ const ServicesAdmin = () => {
   const handleUpdateButton = async (e) => {
     e.preventDefault();
     try {
-      await api.put(`/api/admin/services/${service.id}`, service);
+      await api.put(`/api/services/${service.id}`, service);
       fetchServices();
     } catch (error) {
       console.error('Error updating service:', error);

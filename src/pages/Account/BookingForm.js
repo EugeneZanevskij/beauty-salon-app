@@ -19,7 +19,7 @@ const BookingForm = () => {
   }, []);
 
   const fetchServices = async () => {
-    api.get('/api/bookings/services')
+    api.get('/api/services')
       .then((response) => {
         setServices(response.data);
       })

@@ -8,7 +8,7 @@ const Services = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const loadServices = async () => {
-    const response = await api.get("/api/services");
+    const response = await api.get("/api/services/service_category");
     setServices(response.data);
   };
   const loadCategories = async () => {

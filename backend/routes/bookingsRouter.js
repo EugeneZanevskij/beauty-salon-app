@@ -2,20 +2,6 @@ const express = require('express');
 const router = express.Router();
 const db = require('../database/db');
 
-router.get('/services', (req, res) => {
-  const query = 'SELECT * FROM services';
-
-  db.query(query, (err, result) => {
-    if (err) {
-      console.error('Error fetching masters:', err);
-      res.status(500).json({ error: 'Failed to fetch masters' });
-      return;
-    }
-
-    res.json(result);
-  });
-});
-
 // Fetch Services
 router.post('/correspondingMasters', (req, res) => {
   const { service_id } = req.body;

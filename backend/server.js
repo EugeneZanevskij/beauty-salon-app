@@ -5,6 +5,7 @@ const cors = require('cors');
 const db = require('./database/db');
 const masterServicesRouter = require('./routes/masterServicesRouter');
 const bookingsRouter = require('./routes/bookingsRouter');
+const servicesRouter = require('./routes/servicesRouter');
 // const routes = require('./routes');
 
 // Middleware
@@ -69,19 +70,19 @@ app.get('/api/categories', (req, res) => {
     // res.send(results);
   });
 });
-app.get('/api/services', (req, res) => {
-  const servicesData = `SELECT s.id, s.name, s.category_id, c.category, s.price, s.duration_minutes 
-  FROM services s
-  INNER JOIN category c ON s.category_id = c.id`;
-  db.query(servicesData, (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Error retrieving services' });
-    }
-    res.json(results);
-    // res.send(results);
-  });
-});
+// app.get('/api/services', (req, res) => {
+//   const servicesData = `SELECT s.id, s.name, s.category_id, c.category, s.price, s.duration_minutes 
+//   FROM services s
+//   INNER JOIN category c ON s.category_id = c.id`;
+//   db.query(servicesData, (err, results) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ message: 'Error retrieving services' });
+//     }
+//     res.json(results);
+//     // res.send(results);
+//   });
+// });
 
 app.get('/api/masters', (req, res) => {
   const mastersData = `
@@ -306,66 +307,65 @@ app.put('/api/admin/categories/:id', (req, res) => {
   })
 })
 
-app.get('/api/admin/services', (req, res) => {
-  const categoriesData = `SELECT * FROM services`;
-  db.query(categoriesData, (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Error retrieving services' });
-    }
-    res.json(results);
-    // res.send(results);
-  });
-});
+// app.get('/api/admin/services', (req, res) => {
+//   const categoriesData = `SELECT * FROM services`;
+//   db.query(categoriesData, (err, results) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ message: 'Error retrieving services' });
+//     }
+//     res.json(results);
+//     // res.send(results);
+//   });
+// });
 
-app.post('/api/admin/services', (req, res) => {
-  const { name, category_id, price, duration_minutes } = req.body;
+// app.post('/api/admin/services', (req, res) => {
+//   const { name, category_id, price, duration_minutes } = req.body;
 
-  const insertServiceQuery = 'INSERT INTO services (name, category_id, price, duration_minutes) VALUES (?, ?, ?, ?)';
-  const values = [name, category_id, price, duration_minutes];
+//   const insertServiceQuery = 'INSERT INTO services (name, category_id, price, duration_minutes) VALUES (?, ?, ?, ?)';
+//   const values = [name, category_id, price, duration_minutes];
 
-  db.query(insertServiceQuery, values, (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Error creating service' });
-    }
-    return res.status(201).json({ message: 'Category added successfully' });
-  });
-});
+//   db.query(insertServiceQuery, values, (err, results) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ message: 'Error creating service' });
+//     }
+//     return res.status(201).json({ message: 'Category added successfully' });
+//   });
+// });
 
-app.put('/api/admin/services/:id', (req, res) => {
-  const id = req.params.id;
-  const { name, category_id, price, duration_minutes } = req.body;
+// app.put('/api/admin/services/:id', (req, res) => {
+//   const id = req.params.id;
+//   const { name, category_id, price, duration_minutes } = req.body;
 
-  const updateServiceQuery = 'UPDATE services SET name=?, category_id=?, price=?, duration_minutes=? WHERE id=?';
-  const values = [name, category_id, price, duration_minutes, id];
+//   const updateServiceQuery = 'UPDATE services SET name=?, category_id=?, price=?, duration_minutes=? WHERE id=?';
+//   const values = [name, category_id, price, duration_minutes, id];
 
-  db.query(updateServiceQuery, values, (err) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Error updating service' });
-    }
-    res.status(200).json({ message: 'Service updated successfully' });
-  });
-});
+//   db.query(updateServiceQuery, values, (err) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ message: 'Error updating service' });
+//     }
+//     res.status(200).json({ message: 'Service updated successfully' });
+//   });
+// });
 
-app.delete('/api/admin/services/:id', (req, res) => {
-  const id = req.params.id;
+// app.delete('/api/admin/services/:id', (req, res) => {
+//   const id = req.params.id;
 
-  const deleteServiceQuery = 'DELETE FROM services WHERE id=?';
-  const values = [id];
+//   const deleteServiceQuery = 'DELETE FROM services WHERE id=?';
+//   const values = [id];
 
-  db.query(deleteServiceQuery, values, (err) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Error deleting service' });
-    }
+//   db.query(deleteServiceQuery, values, (err) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).json({ message: 'Error deleting service' });
+//     }
 
-    res.status(200).json({ message: `Service with ID ${id} deleted successfully` });
-  });
-});
+//     res.status(200).json({ message: `Service with ID ${id} deleted successfully` });
+//   });
+// });
 
-app.use('/api/admin/master_services', masterServicesRouter);
 
 // Assuming you have already set up your Express.js server and connected to the database
 
@@ -374,7 +374,6 @@ app.post('/api/bookings', (req, res) => {
   const { date, time, masterName, serviceName } = req.body;
   const { userId } = req.headers; // Assuming you set the user ID in the headers
 
-  // Fetch the master ID based on the master name
   const getMasterIdQuery = 'SELECT id FROM master WHERE name = ?';
   db.query(getMasterIdQuery, [masterName], (err, masterResult) => {
     if (err) {
@@ -382,29 +381,20 @@ app.post('/api/bookings', (req, res) => {
       res.status(500).send({ error: 'An error occurred while fetching master ID' });
     } else {
       const masterId = masterResult[0].id;
-
-      // Fetch the service ID based on the service name
       const getServiceIdQuery = 'SELECT id FROM services WHERE name = ?';
       db.query(getServiceIdQuery, [serviceName], (err, serviceResult) => {
         if (err) {
           console.error('Error fetching service ID:', err);
           res.status(500).send({ error: 'An error occurred while fetching service ID' });
         } else {
-          const serviceId = serviceResult[0].id;
-
-          // Perform the necessary validation and booking logic here
-          // Example: Check availability, double bookings, etc.
-
-          // Assuming you have a MySQL database connection established
           const insertBookingQuery = 'INSERT INTO client_master_services (client_id, master_service_id, date_signup, time_signup) VALUES (?, ?, ?, ?)';
           const values = [userId, masterId, date, time];
-
+          
           db.query(insertBookingQuery, values, (err, result) => {
             if (err) {
               console.error('Error creating booking:', err);
               res.status(500).send({ error: 'An error occurred while creating the booking' });
             } else {
-              // Booking created successfully
               res.status(200).send({ message: 'Booking created successfully' });
             }
           });
@@ -415,6 +405,8 @@ app.post('/api/bookings', (req, res) => {
 });
 
 app.use('/api/bookings', bookingsRouter);
+app.use('/api/services', servicesRouter);
+app.use('/api/admin/master_services', masterServicesRouter);
 
 // Routes
 // app.use('/api', routes);

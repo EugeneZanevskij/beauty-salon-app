@@ -30,7 +30,7 @@ const MastersAdmin = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await api.get('/api/admin/services');
+      const response = await api.get('/api/services');
       setServices(response.data);
     } catch (error) {
       console.error('Error fetching services:', error);
