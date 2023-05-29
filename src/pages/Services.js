@@ -6,6 +6,7 @@ const Services = () => {
   const [services, setServices] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const loadServices = async () => {
     const response = await api.get("/api/services/service_category");
@@ -25,13 +26,25 @@ const Services = () => {
     setSelectedCategory(categoryId);
   };
 
-  const filteredServices = selectedCategory
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredServices = (selectedCategory
     ? services.filter((service) => service.category_id === selectedCategory)
-    : services;
+    : services)
+    .filter((service) => service.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
     <div className="about__services">
       <h1 className="about__services-title">Services</h1>
+      <input 
+        className="about__services-search"
+        type="text"
+        placeholder="Search by name"
+        value={searchQuery}
+        onChange={handleSearchChange}
+      />
       <div className="about__services-categories">
         <button
           className={`about__services-categories__button ${selectedCategory === null ? "active" : ""}`}
@@ -57,7 +70,7 @@ const Services = () => {
               <strong>Category:</strong> {service.category}
             </div>
             <div className="about__services-services__card-info">
-              <strong>Price:</strong> ${service.price}
+              <strong>Price:</strong> Br {service.price}
             </div>
             <div className="about__services-services__card-info">
               <strong>Duration:</strong> {service.duration_minutes} minutes
