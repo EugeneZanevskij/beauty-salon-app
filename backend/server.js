@@ -6,6 +6,7 @@ const db = require('./database/db');
 const masterServicesRouter = require('./routes/masterServicesRouter');
 const bookingsRouter = require('./routes/bookingsRouter');
 const servicesRouter = require('./routes/servicesRouter');
+const categoriesRouter = require('./routes/categoriesRouter');
 
 // Middleware
 app.use(cors());
@@ -54,18 +55,6 @@ app.post('/api/login', (req, res) => {
     }
 
     res.status(200).send({email: client.email, password: client.password});
-  });
-});
-
-
-app.get('/api/categories', (req, res) => {
-  const categoriesData = `SELECT id, category FROM category`;
-  db.query(categoriesData, (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Error retrieving services' });
-    }
-    res.json(results);
   });
 });
 
@@ -238,56 +227,6 @@ app.put('/api/admin/masters/:id', (req, res) => {
   })
 })
 
-app.get('/api/admin/categories', (req, res) => {
-  const categoriesData = `SELECT * FROM category`;
-  db.query(categoriesData, (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Error retrieving services' });
-    }
-    res.json(results);
-    // res.send(results);
-  });
-});
-
-app.post('/api/admin/categories', (req, res) => {
-  const { category } = req.body;
-  const categoriesData = `INSERT INTO category (category) VALUES (?)`;
-  // const values = ['test'];
-  db.query(categoriesData, [category], (err, result) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Error adding category' });
-    }
-    return res.status(201).json({ message: 'Category added successfully' });
-  })
-});
-
-app.delete('/api/admin/categories/:id', (req, res) => {
-  const { id } = req.params;
-  const deleteCategory = `DELETE FROM category WHERE id = ?`;
-  db.query(deleteCategory, [id], (err, result) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Error deleting category' });
-    }
-    return res.status(200).json({ message: 'Category deleted successfully' });
-  })
-});
-
-app.put('/api/admin/categories/:id', (req, res) => {
-  const { id } = req.params;
-  const values = [req.body.category];
-  const updateCategory = `UPDATE category SET category = ? WHERE id = ?`;
-  db.query(updateCategory, [...values, id], (err, result) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Error updating category' });
-    }
-    return res.status(200).json({ message: 'Category updated successfully' });
-  })
-})
-
 // Handle the POST request to the /api/bookings endpoint
 app.post('/api/bookings', (req, res) => {
   const { date, time, masterName, serviceName } = req.body;
@@ -323,6 +262,7 @@ app.post('/api/bookings', (req, res) => {
   });
 });
 
+app.use('/api/categories', categoriesRouter);
 app.use('/api/bookings', bookingsRouter);
 app.use('/api/services', servicesRouter);
 app.use('/api/master_services', masterServicesRouter);

@@ -16,7 +16,7 @@ const CategoriesAdmin = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await api.get('/api/admin/categories');
+      const response = await api.get('/api/categories');
       setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -37,7 +37,7 @@ const CategoriesAdmin = () => {
   const handleAddButton = async (e) => {
     e.preventDefault();
     try {
-      await api.post('/api/admin/categories', category);
+      await api.post('/api/categories', category);
       fetchCategories();
     } catch (error) {
       console.error('Error creating category:', error);
@@ -59,7 +59,7 @@ const CategoriesAdmin = () => {
 
   const handleDelete = async (categoryId) => {
     try {
-      await api.delete(`/api/admin/categories/${categoryId}`);
+      await api.delete(`/api/categories/${categoryId}`);
       fetchCategories();
     } catch (error) {
       console.error('Error deleting category:', error);
@@ -74,14 +74,14 @@ const CategoriesAdmin = () => {
   const handleUpdateButton = async (e) => {
     e.preventDefault();
     try {
-      await api.put(`/api/admin/categories/${category.id}`, category);
+      await api.put(`/api/categories/${category.id}`, category);
       fetchCategories();
     } catch (error) {
       console.error('Error updating category:', error);
     }
     setCategory({
       id: null,
-    category: '',
+      category: '',
     });
     toggleModal();
   }
