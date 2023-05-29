@@ -1,0 +1,31 @@
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(230, 156, 166, 0.5);
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.booking-form__label {
+  margin-bottom: 0.75rem;
+}
+
+.booking-form__input,
+.booking-form__select {
+  margin-bottom: 1rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.booking-form__button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.booking-form__button:hover {
+  background-color: #0069d9;
+}

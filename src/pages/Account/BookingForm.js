@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../api';
+import '../../styles/BookingForm.css';
 
 const BookingForm = () => {
   const [bookingData, setBookingData] = useState({
@@ -14,7 +15,6 @@ const BookingForm = () => {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
-    // Fetch the services data
     fetchServices();
   }, []);
 
@@ -50,42 +50,13 @@ const BookingForm = () => {
     fetchMasters(e);
   }
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  
-  //   await fetchMasterServicesId(e);
-  //   await fetchClientId();
-  
-  //   const booking = {
-  //     client_id: clientId,
-  //     master_service_id: masterServicesId,
-  //     date_signup: bookingData.date,
-  //     time_signup: bookingData.time,
-  //   };
-  
-  //   api.post('/api/bookings/bookings', booking)
-  //     .then((response) => {
-  //       // Handle successful submission
-  //       console.log('Booking submitted:', response.data);
-  //     })
-  //     .catch((error) => {
-  //       // Handle error
-  //       console.error('Error submitting booking:', error);
-  //     });
-  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    // Fetch masterServicesId and clientId
     await fetchMasterServicesId(e);
     await fetchClientId();
   
-    console.log(masterServicesId);
-    console.log(clientId);
-  
-    // Check if masterServicesId and clientId are set
     if (masterServicesId && clientId) {
-      // Create booking object
       const booking = {
         client_id: clientId,
         master_service_id: masterServicesId,
@@ -93,10 +64,8 @@ const BookingForm = () => {
         time_signup: bookingData.time,
       };
   
-      // Make the API call
       try {
         const response = await api.post('/api/bookings/bookings', booking);
-        // Handle successful submission
         console.log('Booking submitted:', response.data);
         setBookingData({
           date: '',
@@ -109,7 +78,6 @@ const BookingForm = () => {
         setMasters([]);
 
       } catch (error) {
-        // Handle error
         console.error('Error submitting booking:', error);
       }
     } else {
@@ -117,8 +85,6 @@ const BookingForm = () => {
     }
   };
   
-
-  // Client-side code
   const fetchClientId = async () => {
     try {
       const user = JSON.parse(localStorage.getItem('user')); // Assuming the user object is stored in localStorage
@@ -167,25 +133,28 @@ const BookingForm = () => {
   
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Date:</label>
+    <form className="booking-form" onSubmit={handleSubmit}>
+      <label className="booking-form__label">Date:</label>
       <input
+        className="booking-form__input"
         type="date"
         name="date"
         value={bookingData.date}
         onChange={handleChange}
       />
 
-      <label>Time:</label>
+      <label className="booking-form__label">Time:</label>
       <input
+        className="booking-form__input"
         type="time"
         name="time"
         value={bookingData.time}
         onChange={handleChange}
       />
 
-      <label>Master:</label>
+      <label className="booking-form__label">Master:</label>
       <select
+        className="booking-form__select"
         name="master_id"
         value={bookingData.master_id}
         onChange={handleChange}
@@ -198,8 +167,9 @@ const BookingForm = () => {
         ))}
       </select>
 
-      <label>Service:</label>
+      <label className="booking-form__label">Service:</label>
       <select
+        className="booking-form__select"
         name="service_id"
         value={bookingData.service_id}
         onChange={handleServiceChange}
@@ -211,8 +181,7 @@ const BookingForm = () => {
           </option>
         ))}
       </select>
-
-      <button type="submit">Book Appointment</button>
+      <button className="booking-form__button" type="submit">Book Appointment</button>
     </form>
   );
 };
