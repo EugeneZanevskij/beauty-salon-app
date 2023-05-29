@@ -28,14 +28,23 @@ router.post('/', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   const id = req.params.id;
-  const deleteMasterQuery = 'DELETE FROM master WHERE id=?';
-  const values = [id];
-  db.query(deleteMasterQuery, values, (err) => {
+  const deleteMasterServicesQuery = 'DELETE FROM master_services WHERE master_id = ?';
+  const deleteMasterQuery = 'DELETE FROM master WHERE id = ?';
+
+  db.query(deleteMasterServicesQuery, [id], (err) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: 'Error deleting master' });
+      return res.status(500).json({ message: 'Error deleting associated master services' });
     }
-    res.status(200).json({ message: `Master deleted successfully` });
+
+    db.query(deleteMasterQuery, [id], (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: 'Error deleting master' });
+      }
+
+      res.status(200).json({ message: 'Master deleted successfully' });
+    });
   });
 });
 

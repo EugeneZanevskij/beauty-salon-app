@@ -141,8 +141,7 @@ const MastersAdmin = () => {
         })
       );
       await Promise.all(promises);
-      const response = await api.get('/api/masters');
-      setMasters(response.data); // Update the state with the updated data
+      fetchMasters();
     } catch (error) {
       console.error('Error updating master:', error);
     }
@@ -154,7 +153,7 @@ const MastersAdmin = () => {
       selectedServices: [],
     });
     toggleModal();
-  };  
+  };
 
   //TODO
   const loadAppointments = async (firstName, lastName) => {
