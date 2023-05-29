@@ -2,6 +2,12 @@
   text-align: center;
 }
 
+.admin-services__search {
+  padding: 0.5rem 1rem;
+  border: 0.125rem solid #ccc;
+  border-radius: 0.25rem;
+}
+
 .admin-services__table .table__row:nth-of-type(odd) {
   background-color: rgba(124, 195, 136, 0.4);
 }

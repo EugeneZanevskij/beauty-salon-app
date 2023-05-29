@@ -12,10 +12,7 @@ const ServicesAdmin = () => {
     price: '',
     duration_minutes: '',
   });
-
-  useEffect(() => {
-    fetchServices();
-  }, []);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const fetchServices = async () => {
     try {
@@ -25,6 +22,10 @@ const ServicesAdmin = () => {
       console.error('Error fetching services:', error);
     }
   };
+
+  useEffect(() => {
+    fetchServices();
+  }, []);
 
   const handleChange = (e) => {
     setService({
@@ -98,9 +99,24 @@ const ServicesAdmin = () => {
     toggleModal();
   };
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredServices = services.filter((service) =>
+    service.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className='admin-services'>
       <h1 className='admin-services__title'>Administrate Services</h1>
+      <input 
+        className='admin-services__search'
+        type='text'
+        value={searchQuery}
+        onChange={handleSearchChange}
+        placeholder='Search services'
+      />
       <button  className='table__button table__button--add' onClick={toggleModal}>Add Service</button>
       <table className="table admin-services__table">
         <thead>
@@ -114,7 +130,7 @@ const ServicesAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {services.map((service) => (
+          {filteredServices.map((service) => (
             <tr className="table__row" key={service.id}>
               <td className='table__data'>{service.id}</td>
               <td className='table__data'>{service.name}</td>
