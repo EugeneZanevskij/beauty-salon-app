@@ -2,13 +2,38 @@
   padding: 20px;
 }
 
-.user-info {
-  background-color: #f4f4f4;
-  padding: 10px;
-  border-radius: 4px;
-  margin-top: 10px;
+.account-page__info {
+  background-color: #a4d1dd;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  display: flex;
+  gap: 2rem;
 }
 
-.user-info p {
-  margin-bottom: 5px;
+.account-page__image {
+  width: 100px;
+  height: 100px;
+  border-radius: 80%;
+}
+
+.account-page__info .account-page__paragraph {
+  margin-bottom: 0.5rem;
+}
+
+.account-page__info strong {
+  font-weight: bold;
+}
+
+.account-page__info .account-page__button {
+  padding: 10px 20px;
+  background-color: #27b7a2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.account-page__info .account-page__button:hover {
+  background-color: #0056b3;
 }

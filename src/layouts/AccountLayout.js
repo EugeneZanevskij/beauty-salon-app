@@ -11,7 +11,7 @@ const AccountLayout = () => {
             <Link to="" className="account__navigation-link">Account</Link>
           </li>
           <li className="account__navigation-item">
-            <Link to="/booking" className="account__navigation-link">Booking</Link>
+            <Link to="booking" className="account__navigation-link">Booking</Link>
           </li>
         </ul>
       </nav>

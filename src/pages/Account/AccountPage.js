@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../api';
 import '../../styles/AccountPage.css';
+import ProfilePic from "../../assets/Default_pfp.jpg";
 
 const AccountPage = () => {
   const [user, setUser] = useState(null);
@@ -45,25 +46,28 @@ const AccountPage = () => {
 
   return (
     <div className="account-page">
-      <h2>Account Information</h2>
+      <h2 className='account-page__title'>Account Information</h2>
       {user ? (
-        <div className="user-info">
-          <p>
-            <strong>Name:</strong> {user.firstName} {user.lastName}
-          </p>
-          <p>
-            <strong>Email:</strong> {user.email}
-          </p>
-          <p>
-            <strong>Phone Number:</strong> {user.phone_number}
-          </p>
-          <p>
-            <strong>Birthday:</strong> {formatDate(user.birthday)}
-          </p>
-          <button onClick={handleLogout}>Logout</button>
+        <div className="account-page__info">
+          <img className='account-page__image' src={ProfilePic} alt="profile" />
+          <div className='account-page__text'>
+            <p className='account-page__paragraph'>
+              <strong>Name:</strong> {user.firstName} {user.lastName}
+            </p>
+            <p className='account-page__paragraph'>
+              <strong>Email:</strong> {user.email}
+            </p>
+            <p className='account-page__paragraph'>
+              <strong>Phone Number:</strong> {user.phone_number}
+            </p>
+            <p className='account-page__paragraph'>
+              <strong>Birthday:</strong> {formatDate(user.birthday)}
+            </p>
+            <button className='account-page__button' onClick={handleLogout}>Logout</button>
+          </div>
         </div>
       ) : (
-        <p>Loading user information...</p>
+        <p className='account-page__paragraph'>Loading user information...</p>
       )}
     <div>
       <h1>Appointments</h1>
