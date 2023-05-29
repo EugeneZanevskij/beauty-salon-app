@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../api';
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const [client, setClient] = useState({
     firstName: '',
     lastName: '',
@@ -25,26 +27,35 @@ const RegisterPage = () => {
     try {
       const response = await api.post('/api/register', client);
       console.log(response.data);
+      setClient({
+        firstName: '',
+        lastName: '',
+        phone_number: '',
+        email: '',
+        birthday: '',
+        password: '',
+      });
+      setTimeout(() => {
+        navigate('/login');
+      }, 1000);
     } catch (error) {
       console.error('Registration error:', error);
     }
-    setClient({
-      firstName: '',
-      lastName: '',
-      phone_number: '',
-      email: '',
-      birthday: '',
-      password: '',
-    })
   };
 
+  const handleLoginButton = (e) => {
+    e.preventDefault();
+    navigate('/login');
+  }
+
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleRegister}>
-        <div>
-          <label htmlFor="firstName">First Name</label>
+    <div className="login-page">
+      <h2 className="login-page__title">Register</h2>
+      <form className="login-page__form" onSubmit={handleRegister}>
+        <div className='login-page__form-row'>
+          <label className='login-page__form-label' htmlFor="firstName">First Name</label>
           <input
+            className='login-page__form-input'
             type="text"
             id="firstName"
             name="firstName"
@@ -52,9 +63,10 @@ const RegisterPage = () => {
             onChange={handleChange}
           />
         </div>
-        <div>
-          <label htmlFor="lastName">Last Name</label>
+        <div className='login-page__form-row'>
+          <label className='login-page__form-label' htmlFor="lastName">Last Name</label>
           <input
+            className='login-page__form-input'
             type="text"
             id="lastName"
             name="lastName"
@@ -62,9 +74,10 @@ const RegisterPage = () => {
             onChange={handleChange}
           />
         </div>
-        <div>
-          <label htmlFor="phoneNumber">Phone Number</label>
+        <div className='login-page__form-row'>
+          <label className='login-page__form-label' htmlFor="phoneNumber">Phone Number</label>
           <input
+            className='login-page__form-input'
             type="text"
             id="phone_number"
             name="phone_number"
@@ -72,9 +85,10 @@ const RegisterPage = () => {
             onChange={handleChange}
           />
         </div>
-        <div>
-          <label htmlFor="email">Email</label>
+        <div className='login-page__form-row'>
+          <label className='login-page__form-label' htmlFor="email">Email</label>
           <input
+            className='login-page__form-input'
             type="email"
             id="email"
             name="email"
@@ -82,9 +96,10 @@ const RegisterPage = () => {
             onChange={handleChange}
           />
         </div>
-        <div>
-          <label htmlFor="birthday">Birthday</label>
+        <div className='login-page__form-row'>
+          <label className='login-page__form-label' htmlFor="birthday">Birthday</label>
           <input
+            className='login-page__form-input'
             type="date"
             id="birthday"
             name="birthday"
@@ -92,9 +107,10 @@ const RegisterPage = () => {
             onChange={handleChange}
           />
         </div>
-        <div>
-          <label htmlFor="password">Password</label>
+        <div className='login-page__form-row'>
+          <label className='login-page__form-label' htmlFor="password">Password</label>
           <input
+            className='login-page__form-input'
             type="password"
             id="password"
             name="password"
@@ -102,7 +118,8 @@ const RegisterPage = () => {
             onChange={handleChange}
           />
         </div>
-        <button type="submit">Register</button>
+        <button className="login-page__form-button" type="submit">Register</button>
+        <button className="login-page__form-button login-page__form-button--register" type="button" onClick={handleLoginButton}>Login</button>
       </form>
     </div>
   );
