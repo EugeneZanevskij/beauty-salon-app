@@ -152,21 +152,6 @@ const BookingForm = () => {
         onChange={handleChange}
       />
 
-      <label className="booking-form__label">Master:</label>
-      <select
-        className="booking-form__select"
-        name="master_id"
-        value={bookingData.master_id}
-        onChange={handleChange}
-      >
-        <option value="">Select a master</option>
-        {masters.map((master) => (
-          <option value={master.id} key={master.id}>
-            {master.firstName} {master.lastName}
-          </option>
-        ))}
-      </select>
-
       <label className="booking-form__label">Service:</label>
       <select
         className="booking-form__select"
@@ -178,6 +163,21 @@ const BookingForm = () => {
         {services.map((service) => (
           <option value={service.id} key={service.id}>
             {service.name}
+          </option>
+        ))}
+      </select>
+
+      <label className="booking-form__label">Master:</label>
+      <select
+        className="booking-form__select"
+        name="master_id"
+        value={bookingData.master_id}
+        onChange={handleChange}
+      >
+        <option value="">Select a master</option>
+        {masters.map((master) => (
+          <option value={master.id} key={master.id}>
+            {master.firstName} {master.lastName}
           </option>
         ))}
       </select>
