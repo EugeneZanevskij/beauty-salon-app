@@ -51,8 +51,9 @@ const Schedule = () => {
             <th className="table__header">Date</th>
             <th className="table__header">Time</th>
             <th className="table__header">Client</th>
-            <th className="table__header">appointment</th>
+            <th className="table__header">Master</th>
             <th className="table__header">Service</th>
+            <th className="table__header">Price</th>
           </tr>
         </thead>
         <tbody>
@@ -64,6 +65,7 @@ const Schedule = () => {
               <td className="table__data">{appointment.firstName} {appointment.lastName}</td>
               <td className="table__data">{appointment.masterFirstName} {appointment.masterLastName}</td>
               <td className="table__data">{appointment.serviceName}</td>
+              <td className="table__data">Br {+appointment.price}</td>
             </tr>
           ))}
         </tbody>

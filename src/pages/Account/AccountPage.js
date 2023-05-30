@@ -78,6 +78,7 @@ const AccountPage = () => {
             <th className="table__header">Time</th>
             <th className="table__header">Master</th>
             <th className="table__header">Service</th>
+            <th className="table__header">Price</th>
           </tr>
         </thead>
         <tbody>
@@ -87,6 +88,7 @@ const AccountPage = () => {
               <td className="table__data">{appointment.time_signup}</td>
               <td className="table__data">{appointment.masterFirstName} {appointment.masterLastName}</td>
               <td className="table__data">{appointment.serviceName}</td>
+              <td className="table__data">Br {+appointment.price}</td>
             </tr>
           ))}
         </tbody>
