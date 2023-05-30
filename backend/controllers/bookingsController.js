@@ -1,4 +1,4 @@
-const db = require('../database/db');
+const db = require('../config/db');
 
 const getCorrespondingMasters = (req, res) => {
   const { service_id } = req.body;

@@ -1,4 +1,4 @@
-const db = require('../database/db');
+const db = require('../config/db');
 
 const getAllCategories = (req, res) => {
   const categoriesData = 'SELECT * FROM category';

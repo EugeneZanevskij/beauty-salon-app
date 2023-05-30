@@ -1,4 +1,4 @@
-const db = require('../database/db');
+const db = require('../config/db');
 
 function getAllMasters(req, res) {
   const mastersDataQuery = `SELECT * FROM master`;

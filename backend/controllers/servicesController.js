@@ -1,4 +1,4 @@
-const db = require('../database/db');
+const db = require('../config/db');
 
 function getAllServices(req, res) {
   const servicesQuery = `SELECT * FROM services`;
