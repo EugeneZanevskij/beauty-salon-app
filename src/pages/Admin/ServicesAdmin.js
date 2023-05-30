@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import api from '../api';
-import '../styles/ServicesAdmin.css';
+import api from '../../api';
+import '../../styles/ServicesAdmin.css';
 
 const ServicesAdmin = () => {
   const [services, setServices] = useState([]);

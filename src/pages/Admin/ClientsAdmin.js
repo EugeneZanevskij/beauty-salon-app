@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import api from '../api';
-import '../styles/ClientsAdmin.css';
+import api from '../../api';
+import '../../styles/ClientsAdmin.css';
 
 const ClientsAdmin = () => {
   const [clients, setClients] = useState([]);

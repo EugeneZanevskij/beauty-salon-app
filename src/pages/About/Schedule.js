@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/Schedule.css';
-import api from '../api';
+import '../../styles/Schedule.css';
+import api from '../../api';
 
 const Schedule = () => {
   const [appointments, setAppointments] = useState([]);

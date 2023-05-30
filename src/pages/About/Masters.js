@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/Masters.css';
-import api from '../api';
+import '../../styles/Masters.css';
+import api from '../../api';
 
 const Masters = () => {
   const [masters, setMasters] = useState([]);
