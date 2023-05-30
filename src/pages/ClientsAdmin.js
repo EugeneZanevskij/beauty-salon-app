@@ -222,10 +222,10 @@ const ClientsAdmin = () => {
             />
             <input
               className="modal__input"
-              type="text"
+              type="date"
               placeholder="Birthday"
               onChange={handleChange}
-              value={formatDate(client.birthday)}
+              value={client.birthday}
               name="birthday"
             />
             {client.id ? (
