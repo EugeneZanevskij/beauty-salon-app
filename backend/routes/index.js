@@ -9,8 +9,10 @@ const registerRoutes = require('./registerRoutes');
 const loginRoutes = require('./loginRoutes');
 const clientsRoutes = require('./clientsRoutes');
 const appointmentsRoutes = require('./appointmentsRoutes');
+const adminRoutes = require('./adminRoutes');
 
 
+router.use('/admin', adminRoutes);
 router.use('/login', loginRoutes);
 router.use('/register', registerRoutes);
 router.use('/clients', clientsRoutes);
