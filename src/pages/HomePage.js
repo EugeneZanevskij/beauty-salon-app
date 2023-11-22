@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
 const HomePage = () => {
   return (
-    <p>HomePage</p>
+    <div className='home-page'/>
   )
 }
 

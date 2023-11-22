@@ -6,7 +6,6 @@ import { isAuthenticated } from '../utils/auth';
 
 const HomeLayout = () => {
   const isLoggedIn = isAuthenticated();
-  //TODO: idAdmin
 
   return (
     <>
@@ -40,6 +39,6 @@ const HomeLayout = () => {
       <Outlet />
     </>
   )
-}
+};
 
-export default HomeLayout
+export default HomeLayout;

@@ -1,29 +1,26 @@
-const express = require('express');
-const router = express.Router();
-const db = require('../database/db');
+const db = require('../config/db');
 
-// Fetch Services
-router.post('/correspondingMasters', (req, res) => {
+const getCorrespondingMasters = (req, res) => {
   const { service_id } = req.body;
 
-  const query = `SELECT m.id, m.firstName, m.lastName
-  FROM master m
-  INNER JOIN master_services ms ON m.id = ms.master_id
-  WHERE ms.service_id = ?`;
-  // 'SELECT * FROM master_services WHERE master_id = ?';
+  const query = `
+    SELECT m.id, m.firstName, m.lastName
+    FROM master m
+    INNER JOIN master_services ms ON m.id = ms.master_id
+    WHERE ms.service_id = ?`;
 
   db.query(query, service_id, (err, result) => {
     if (err) {
-      console.error('Error fetching services:', err);
-      res.status(500).json({ error: 'Failed to fetch services' });
+      console.error('Error fetching corresponding masters:', err);
+      res.status(500).json({ error: 'Failed to fetch masters' });
       return;
     }
 
     res.json(result);
   });
-});
+};
 
-router.post('/find_ms', (req, res) => {
+const findMasterService = (req, res) => {
   const { master_id, service_id } = req.body;
 
   const query = 'SELECT * FROM master_services WHERE master_id = ? AND service_id = ?';
@@ -31,7 +28,7 @@ router.post('/find_ms', (req, res) => {
 
   db.query(query, values, (error, results) => {
     if (error) {
-      console.error('Error retrieving connection:', error);
+      console.error('Error retrieving master service connection:', error);
       res.status(500).json({ error: 'Failed to retrieve connection' });
     } else {
       if (results.length > 0) {
@@ -42,32 +39,32 @@ router.post('/find_ms', (req, res) => {
       }
     }
   });
-});
-router.post('/find_client', (req, res) => {
+};
+
+const findClientByEmail = (req, res) => {
   const { email } = req.body;
 
   const query = 'SELECT * FROM client WHERE email = ?';
   db.query(query, email, (error, results) => {
     if (error) {
-      console.error('Error retrieving connection:', error);
-      res.status(500).json({ error: 'Failed to retrieve connection' });
+      console.error('Error retrieving client:', error);
+      res.status(500).json({ error: 'Failed to retrieve client' });
     } else {
       if (results.length > 0) {
-        const connection = results[0];
-        res.status(200).json(connection);
+        const client = results[0];
+        res.status(200).json(client);
       } else {
-        res.status(404).json({ message: 'Connection not found' });
+        res.status(404).json({ message: 'Client not found' });
       }
     }
   });
-});
+};
 
-// Submit Booking
-router.post('/bookings', (req, res) => {
+const submitBooking = (req, res) => {
   const { client_id, master_service_id, date_signup, time_signup } = req.body;
 
-  const query =
-    `INSERT INTO client_master_services (client_id, master_service_id, date_signup, time_signup)
+  const query = `
+    INSERT INTO client_master_services (client_id, master_service_id, date_signup, time_signup)
     VALUES (?, ?, ?, ?)`;
   const values = [client_id, master_service_id, date_signup, time_signup];
 
@@ -80,6 +77,11 @@ router.post('/bookings', (req, res) => {
 
     res.json({ message: 'Booking submitted successfully', booking: result });
   });
-});
+};
 
-module.exports = router;
+module.exports = {
+  getCorrespondingMasters,
+  findMasterService,
+  findClientByEmail,
+  submitBooking,
+};

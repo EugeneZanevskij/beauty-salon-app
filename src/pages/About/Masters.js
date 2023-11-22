@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/Masters.css';
-import api from '../api';
+import '../../styles/Masters.css';
+import api from '../../api';
 
 const Masters = () => {
   const [masters, setMasters] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
   const loadMasters = async () => {
-    const response = await api.get("/api/masters");
+    const response = await api.get("/api/masters/masters_data");
     setMasters(response.data);
   };
 

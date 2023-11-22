@@ -42,3 +42,9 @@
   text-decoration: none;
   color: #333;
 }
+
+.home-page {
+  width: 100%;
+  height: calc(100vh - 5rem);
+  background: url('../assets/Beautysalon.jpeg') no-repeat center center/cover;
+}

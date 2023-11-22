@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import api from '../api';
-import '../styles/ClientsAdmin.css';
+import api from '../../api';
+import '../../styles/ClientsAdmin.css';
 
 const ClientsAdmin = () => {
   const [clients, setClients] = useState([]);
@@ -26,7 +26,7 @@ const ClientsAdmin = () => {
 
   const fetchClients = async () => {
     try {
-      const response = await api.get('/api/admin/clients');
+      const response = await api.get('/api/clients');
       setClients(response.data);
     } catch (error) {
       console.error('Error fetching clients:', error);
@@ -44,7 +44,7 @@ const ClientsAdmin = () => {
   const handleAddButton = async (e) => {
     e.preventDefault();
     try {
-      await api.post('/api/admin/clients', client);
+      await api.post('/api/clients', client);
       fetchClients();
     } catch (error) {
       console.error('Error creating client:', error);
@@ -74,7 +74,7 @@ const ClientsAdmin = () => {
 
   const handleDelete = async (clientId) => {
     try {
-      await api.delete(`/api/admin/clients/${clientId}`);
+      await api.delete(`/api/clients/${clientId}`);
       fetchClients();
     } catch (error) {
       console.error('Error deleting client:', error);
@@ -89,7 +89,7 @@ const ClientsAdmin = () => {
   const handleUpdateButton = async (e) => {
     e.preventDefault();
     try {
-      await api.put(`/api/admin/clients/${client.id}`, client);
+      await api.put(`/api/clients/${client.id}`, client);
       fetchClients();
     } catch (error) {
       console.error('Error updating client:', error);
@@ -222,10 +222,10 @@ const ClientsAdmin = () => {
             />
             <input
               className="modal__input"
-              type="text"
+              type="date"
               placeholder="Birthday"
               onChange={handleChange}
-              value={formatDate(client.birthday)}
+              value={client.birthday}
               name="birthday"
             />
             {client.id ? (
@@ -248,6 +248,7 @@ const ClientsAdmin = () => {
                   <th className="table__header">Time</th>
                   <th className="table__header">Master</th>
                   <th className="table__header">Service</th>
+                  <th className="table__header">Price</th>
                 </tr>
               </thead>
               <tbody>
@@ -257,6 +258,7 @@ const ClientsAdmin = () => {
                     <td className="table__data">{appointment.time_signup}</td>
                     <td className="table__data">{appointment.masterFirstName} {appointment.masterLastName}</td>
                     <td className="table__data">{appointment.serviceName}</td>
+                    <td className="table__data">Br {+appointment.price}</td>
                   </tr>
                 ))}
               </tbody>
